@@ -9,12 +9,12 @@ body {
 }
 
 :root {
-  --primary-color: #66bb6a;
-  --primary-color-dark: #338a3e;
-  --primary-color-light: #98ee99;
-  --secondary-color: #8D6E63;
-  --secondary-color-dark: #4E342E;
-  --secondary-color-light: #D7CCC8;
+  --primary-color: #673ab7;
+  --primary-color-dark: #320b86;
+  --primary-color-light: #9a67ea;
+  --secondary-color: #00bcd4;
+  --secondary-color-dark: #008ba3;
+  --secondary-color-light: #62efff;
   --background-color: #f5f5f5;
   --app-color: #efefef;
   --light-text: rgba(255, 255, 255, 0.85);
@@ -72,12 +72,8 @@ input {
 textarea, code {
   border-bottom: 1px solid var(--secondary-color);
   color: var(--dark-text);
-}
-
-button {
-  font-family: "Libre Franklin", "Helvetica Neue", "Roboto", sans-serif;
-  vertical-align: middle;
-  transition: background-color 0.2s, color 0.2s;
+  -moz-tab-size : 2;
+       tab-size : 2;
 }
 
 dialog {
@@ -90,6 +86,10 @@ dialog {
 }
 
 button {
+  font-family: "Libre Franklin", "Helvetica Neue", "Roboto", sans-serif;
+  vertical-align: middle;
+  transition: background-color 0.2s, color 0.2s;
+
   i.material-icons {
     font-size: 1rem;
     line-height: 1rem;
@@ -99,10 +99,15 @@ button {
   &:hover {
     border-color: var(--secondary-color-dark);
     background-color: var(--secondary-color);
-    color: var(--primary-color-dark);
+    color: var(--light-text);
   }
   &.primary {
     background-color: var(--primary-color);
+    border-color: var(--primary-color-dark);
+    color: var(--light-text);
+    &:hover {
+      background-color: var(--primary-color-dark);
+    }
   }
 }
 
@@ -173,12 +178,17 @@ dialog.about {
 }
 
 .message {
+  margin: 0 0 0 1rem;
   font-size: 1rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
 }
 
 .controlpanel {
   margin: 1rem;
   button {
     display: inline-block;
+    margin-left: 0;
+    margin-right: 1rem;
   }
 }

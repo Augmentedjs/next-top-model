@@ -3,12 +3,13 @@ import ControlPanelView from "./controlView.js";
 import { PANEL, VALIDATE, RESET, GENERATE } from "../messages.js";
 import Application from "../application/application.js";
 import { prettyPrint } from "next-core-utilities";
-import Model from "presentation-models";
+import { Model } from "presentation-models";
+import { SchemaGenerator } from "next-core-validation";
 
 const MOUNT_POINT = "#main";
 
 const SCHEMA_FIELD = "schema",
-      MODEL_FIELD = "model";
+MODEL_FIELD = "model";
 
 class HomeView extends DirectiveView {
   constructor() {
@@ -16,36 +17,37 @@ class HomeView extends DirectiveView {
       "el": MOUNT_POINT,
       "name": "homeview",
       "style": "view",
-      "events": {
+      "customEvents": {
         "change textarea#schema": (event) => {
           const m = event.target;
           if (m) {
-              try {
-                  const data = JSON.parse(m.value);
-                  this.dataModel.schema = data;
-                  this.model.set("message", "Updated schema.");
-                  m.setAttribute("class", "good");
-                  this.model.set("schema", prettyPrint(data));
-              } catch(e) {
-                  this.model.set("message", "Could Not parse schema!");
-                  m.setAttribute("class", "bad");
-              }
+            try {
+              const data = JSON.parse(m.value);
+              console.debug("data", data);
+              this._dataModel.schema = data;
+              this.model.set("message", "Updated schema.");
+              m.setAttribute("class", "good");
+              this.model.set("schema", prettyPrint(data));
+            } catch(e) {
+              this.model.set("message", "Could Not parse schema!");
+              m.setAttribute("class", "bad");
+            }
           }
         },
         "change textarea#model": (event) => {
           const m = event.target;
           if (m) {
-              try {
-                  const data = JSON.parse(m.value);
-                  this.dataModel.reset(data);
-                  this.model.set("message", "Updated model data.");
-                  m.setAttribute("class", "good");
-                  //m.value = prettyPrint(data);
-                  this.model.set("model", prettyPrint(data));
-              } catch(e) {
-                  this.model.set("message", "Could Not parse model data!");
-                  m.setAttribute("class", "bad");
-              }
+            try {
+              const data = JSON.parse(m.value);
+              this._dataModel.reset(data);
+              this.model.set("message", "Updated model data.");
+              m.setAttribute("class", "good");
+              //m.value = prettyPrint(data);
+              this.model.set("model", prettyPrint(data));
+            } catch(e) {
+              this.model.set("message", "Could Not parse model data!");
+              m.setAttribute("class", "bad");
+            }
           }
         }
       }
@@ -54,14 +56,14 @@ class HomeView extends DirectiveView {
     this._dataModel = new Model();
 
     this.template = `
-      <form>
+      <form id="topmodel">
         <div>
           <label for="schema">JSON Schema (Draft 4)</label>
-          <textarea data-${this.name}="${SCHEMA_FIELD}" id="schema" data-func="_pretty"></textarea>
+          <textarea data-${this.name}="${SCHEMA_FIELD}" id="schema"></textarea>
         </div>
         <div>
-          <label fr="model">Model JSON Data</label>
-          <textarea data-${this.name}="${MODEL_FIELD}" id="model" data-func="_pretty"></textarea>
+          <label for="model">Model JSON Data</label>
+          <textarea data-${this.name}="${MODEL_FIELD}" id="model"></textarea>
         </div>
         <p data-${this.name}="message" class="message" id="message"></p>
         <div id="controlpanel" class="controlpanel"></div>
@@ -72,27 +74,31 @@ class HomeView extends DirectiveView {
 
     this.on(PANEL, (message) => {
       if (message === VALIDATE) {
-        this.model.set("message", this.model.toString());
+        const model = this.model.get("model");
+        const schema = this.model.get("schema");
+        if (model && schema) {
+          this._dataModel.reset(model);
+          this._dataModel.schema = schema
+          this.model.set("message", `Model is ${ (this._dataModel.isValid()) ? "valid": "not valid" }.`);
+        } else {
+          this.model.set("message", `Missing requirements to validate.`);
+        }
       } else if (message === RESET) {
-
+        this.model.set("schema", "");
+        this.model.set("model", "");
+        this.model.set("message", "Reset");
       } else if (message === GENERATE) {
-
+        const model = this.model.get("model");
+        if (model) {
+          const schema = prettyPrint( SchemaGenerator(model) );
+          console.log(schema);
+          this.model.set("schema", schema);
+          this.model.set("message", `Generated schema from model.`);
+        } else {
+          this.model.set("message", `Missing requirements to generate.`);
+        }
       }
     });
-  };
-
-  async _pretty(what) {
-    let ret = null;
-    if (what) {
-      console.debug("what", what);
-      console.debug("model", this.model.toString());
-      const current = await this.model.get(what);
-      console.debug("current", current);
-      const pretty = await prettyPrint(current);
-      console.debug("pretty", pretty);
-      ret = await this.model.set(what, pretty);
-    }
-    return ret;
   };
 
   async render() {

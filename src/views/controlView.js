@@ -30,11 +30,13 @@ class ControlPanelView extends DirectiveView {
   };
 
   reset(e) {
+    console.debug("reset");
     e.preventDefault();
     this.sendMessage(RESET, RESET);
   };
 
   generate(e) {
+    console.debug("generate");
     e.preventDefault();
     this.sendMessage(GENERATE, GENERATE);
   };

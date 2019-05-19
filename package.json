@@ -12,9 +12,19 @@
     "reinstall": "npm run clean && npm install",
     "rebuild": "npm run clean && npm install && npm run build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Augmentedjs/next-top-model.git"
+  },
+  "keywords": [
+    "augmentedjs-next"
+  ],
+  "author": "Bob Warren <jedi.master@augmentedjs.com> (http://www.augmentedjs.com)",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/Augmentedjs/next-top-model/issues"
+  },
+  "homepage": "https://github.com/Augmentedjs/next-top-model#readme",
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
@@ -53,9 +63,11 @@
   "dependencies": {
     "next-core-logger": "^2.5.3",
     "next-core-utilities": "^2.6.1",
+    "next-core-validation": "^2.5.3",
     "presentation-application": "^2.7.0",
     "presentation-components": "^2.8.2",
     "presentation-css": "^3.1.4",
+    "presentation-decorator": "^2.6.1",
     "presentation-logger": "^2.5.4",
     "presentation-mediator": "^2.5.9",
     "presentation-models": "^2.6.3",
