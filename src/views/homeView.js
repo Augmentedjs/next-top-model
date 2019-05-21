@@ -22,12 +22,11 @@ class HomeView extends DirectiveView {
           if (m) {
             try {
               const data = JSON.parse(m.value);
-              this._dataModel.schema = data;
-              this.model.set("message", "Updated schema.");
+              this.message = "Updated schema.";
               m.setAttribute("class", "good");
               this.model.set("schema", prettyPrint(data));
             } catch(e) {
-              this.model.set("message", "Could Not parse schema!");
+              this.message = "Could Not parse schema!";
               m.setAttribute("class", "bad");
             }
           }
@@ -37,7 +36,6 @@ class HomeView extends DirectiveView {
           if (m) {
             try {
               const data = JSON.parse(m.value);
-              this._dataModel.reset(data);
               this.message = "Updated model data.";
               m.setAttribute("class", "good");
               this.model.set("model", prettyPrint(data));
@@ -49,8 +47,6 @@ class HomeView extends DirectiveView {
         }
       }
     });
-
-    this._dataModel = new Model();
 
     this.template = `
       <form id="${this.name}">
@@ -92,9 +88,10 @@ class HomeView extends DirectiveView {
     const model = this.model.get("model");
     const schema = this.model.get("schema");
     if (model && schema) {
-      this._dataModel.reset(model);
-      this._dataModel.schema = schema
-      this.message = `Model is ${ (this._dataModel.isValid()) ? "valid": "not valid" }.`;
+      const dataModel = new Model();
+      dataModel.reset(model);
+      dataModel.schema = schema
+      this.message = `Model is ${ (dataModel.isValid()) ? "valid": "not valid" }.`;
     } else {
       this.message = "Missing requirements to validate.";
     }
