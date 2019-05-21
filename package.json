@@ -54,7 +54,7 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
-    "webpack": "^4.31.0",
+    "webpack": "^4.32.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.2",
     "whatwg-fetch": "^3.0.0",
@@ -63,14 +63,13 @@
   "dependencies": {
     "next-core-logger": "^2.5.3",
     "next-core-utilities": "^2.6.1",
-    "next-core-validation": "^2.5.3",
+    "next-core-validation": "^2.5.4",
     "presentation-application": "^2.7.0",
-    "presentation-components": "^2.8.2",
+    "presentation-components": "^2.8.3",
     "presentation-css": "^3.1.4",
-    "presentation-decorator": "^2.6.1",
-    "presentation-logger": "^2.5.4",
-    "presentation-mediator": "^2.5.9",
+    "presentation-decorator": "^2.6.3",
+    "presentation-logger": "^2.5.5",
     "presentation-models": "^2.6.3",
-    "presentation-router": "^2.6.5"
+    "presentation-router": "^2.6.6"
   }
 }
