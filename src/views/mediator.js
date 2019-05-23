@@ -91,7 +91,7 @@ class Mediator extends BaseMediator {
     });
 
     this.on(CREATE_MODEL, () => {
-      Application.navigate("createmodel");]
+      Application.navigate("createmodel");
     });
   };
 };
