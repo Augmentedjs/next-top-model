@@ -2,7 +2,8 @@ import Mediator from "../views/mediator.js";
 import Article from "../components/article.js";
 import Header from "../components/header.js";
 import Application from "../application/application.js";
-import { FONT } from "../constants.js";
+import HamburgerMenu from "../components/hamburger.js";
+import { HEADER, FONT } from "../constants.js";
 import Logger from "../logger/logger.js";
 
 const initializeApp = async () => {
@@ -24,6 +25,11 @@ const initializeApp = async () => {
       throw new Error("Error creating header!");
     }
 
+    Application.mediator.menu = new HamburgerMenu();
+    if (!Application.mediator.menu) {
+      throw new Error("Error creating hamburger menu!");
+    }
+
     let view = await Application.mediator.article.render();
     if (!view) {
       throw new Error("Error creating mediator!");
@@ -34,8 +40,14 @@ const initializeApp = async () => {
       throw new Error("Error creating header!");
     }
 
-    Application.mediator.observeColleagueAndTrigger(Application.mediator.article, "article", "header");
-    Application.mediator.observeColleagueAndTrigger(Application.mediator.header, "header", "header");
+    view = await Application.mediator.menu.render();
+    if (!view) {
+      throw new Error("Error rendering hamburger menu!");
+    }
+
+    Application.mediator.observeColleagueAndTrigger(Application.mediator.article, "article", HEADER);
+    Application.mediator.observeColleagueAndTrigger(Application.mediator.header, "header", HEADER);
+    Application.mediator.observeColleagueAndTrigger(Application.mediator.menu, "menu", HEADER);
     if (!Application.mediator.channels) {
       throw new Error("Error observing views!");
     }
@@ -46,7 +58,7 @@ const initializeApp = async () => {
     }
   } catch(e) {
     const err = `Error initializing Application - ${e}`;
-    Logger.error(err);
+    Logger.error(e);
     throw new Error(err);
   }
 };

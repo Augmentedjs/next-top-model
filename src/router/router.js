@@ -5,6 +5,8 @@ import { PANEL } from "../messages.js";
 
 // views
 import HomeView from "../views/homeView.js";
+import ManualView from "../views/manualView.js";
+import CreateModelView from "../views/createModelView.js";
 
 const TRANSITION = {
   "in": 250,
@@ -27,6 +29,14 @@ class Router extends BaseRouter {
         },
         "home": () => {
           loadViewAndObserve(this, new HomeView());
+          return this;
+        },
+        "manual": () => {
+          loadViewAndObserve(this, new ManualView());
+          return this;
+        },
+        "createmodel": () => {
+          loadViewAndObserve(this, new CreateModelView());
           return this;
         }
       }

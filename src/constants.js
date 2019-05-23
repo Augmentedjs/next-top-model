@@ -5,3 +5,5 @@ export const FONT = {
 };
 
 export const APP_NAME = "Next Top Model";
+
+export const HEADER = "header";

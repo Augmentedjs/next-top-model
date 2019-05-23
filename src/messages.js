@@ -7,3 +7,5 @@ export const PANEL = "panel";
 export const VALIDATE = "validate";
 export const RESET = "reset";
 export const GENERATE = "generate";
+
+export const CREATE_MODEL = "createmodel";

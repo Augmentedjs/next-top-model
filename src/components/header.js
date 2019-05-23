@@ -12,8 +12,8 @@ class Header extends BaseHeader {
       "name": "header"
     });
     this.template = `
-      <figure class="logo jenson" id="${AVATAR_IMAGE}">
-      </figure>
+      <nav id="menu"></nav>
+      <figure class="logo jenson" id="${AVATAR_IMAGE}"></figure>
       <h1>${APP_NAME}</h1>
     `;
   };

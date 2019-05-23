@@ -61,6 +61,7 @@
     "winston": "^3.2.1"
   },
   "dependencies": {
+    "material-icons": "^0.3.1",
     "next-core-logger": "^2.5.3",
     "next-core-utilities": "^2.6.1",
     "next-core-validation": "^2.5.4",
@@ -70,6 +71,7 @@
     "presentation-decorator": "^2.6.3",
     "presentation-logger": "^2.5.5",
     "presentation-models": "^2.6.3",
-    "presentation-router": "^2.6.6"
+    "presentation-router": "^2.6.6",
+    "presentation-table": "^2.5.6"
   }
 }

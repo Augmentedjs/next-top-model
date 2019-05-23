@@ -11,8 +11,9 @@ import {
   NAVIGATION,
   PANEL,
   VALIDATE,
-  RESET, 
-  GENERATE
+  RESET,
+  GENERATE,
+  CREATE_MODEL
 } from "../messages.js";
 
 const displayErrorMessage = async (message, context) => {
@@ -87,6 +88,10 @@ class Mediator extends BaseMediator {
 
     this.on(GENERATE, (message) => {
       this.publish(PANEL, GENERATE, message);
+    });
+
+    this.on(CREATE_MODEL, () => {
+      Application.navigate("createmodel");]
     });
   };
 };
