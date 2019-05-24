@@ -13,9 +13,12 @@ class CreateModelView extends DirectiveView {
     this.template = `
       <h1>Create Model</h1>
       <form>
-        <label for="name">Name
-        <input data-${this.name}="name" type="text" name="name" id="name"/>
+        <label for="name">Name (inside)
+          <input data-${this.name}="name" type="text" name="name" id="name"/>
         </label>
+        <label for="nameo">Name (outside)</label>
+        <input data-${this.name}="nameo" type="text" name="nameo" id="nameo"/>
+        
       </form>
     `;
   };
