@@ -24,19 +24,16 @@ class ControlPanelView extends DirectiveView {
   };
 
   validate(e) {
-    console.debug("validate");
     e.preventDefault();
     this.sendMessage(VALIDATE, VALIDATE);
   };
 
   reset(e) {
-    console.debug("reset");
     e.preventDefault();
     this.sendMessage(RESET, RESET);
   };
 
   generate(e) {
-    console.debug("generate");
     e.preventDefault();
     this.sendMessage(GENERATE, GENERATE);
   };

@@ -72,8 +72,11 @@ input {
 textarea, code {
   border-bottom: 1px solid var(--secondary-color);
   color: var(--dark-text);
-  -moz-tab-size : 2;
-       tab-size : 2;
+  -moz-tab-size: 2;
+       tab-size: 2;
+  &.small {
+    height: 6rem;
+  }
 }
 
 dialog {
