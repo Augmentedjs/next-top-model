@@ -22,7 +22,7 @@ class CreateModelView extends DirectiveView {
           <textarea data-${this.name}="desc" name="desc" class="small"></textarea>
         </label>
         <label for="${PROPERTY_LIST}">Properties</label>
-        <ul id="${PROPERTY_LIST}">
+        <ul id="${PROPERTY_LIST}" class="properties">
         </ul>
       </form>
       <div id="controlpanel" class="controlpanel">
@@ -36,7 +36,21 @@ class CreateModelView extends DirectiveView {
     const list = Dom.selector(`#${PROPERTY_LIST}`);
     if (list) {
       const li = document.createElement("li");
-      li.innerText = "[Type] Name [Contriants]";
+      li.innerHTML = `
+        <select>
+          <option value="string">String</option>
+          <option value="number">Number</option>
+          <option value="array">Array</option>
+        <select>
+        <input name="title" placeholder="title" typew="text"/>
+        <input name="min" placeholder="0" type="number" class="hidden"/>
+        <input name="max" placeholder="1" type="number" min="1" class="hidden"/>
+        <input name="regex" placeholder="regex" type="text" class="hidden"/>
+        <label>
+          <input name="required" type="checkbox"/>
+          Required
+        </label>
+      `;
       const button = document.createElement("button");
       button.dataset[this.name] = "remove";
       button.dataset.click = "removeprop";

@@ -27,10 +27,6 @@
   "homepage": "https://github.com/Augmentedjs/next-top-model#readme",
   "devDependencies": {
     "@babel/core": "^7.4.4",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
-    "@babel/plugin-transform-async-to-generator": "^7.4.4",
-    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
     "acorn": "^6.1.1",
