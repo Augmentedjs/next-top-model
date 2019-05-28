@@ -24,11 +24,11 @@ class Router extends BaseRouter {
       "transition": TRANSITION,
       "routes": {
         "": () => {
-          loadViewAndObserve(this, new HomeView());
+          loadViewAndObserve(this, new HomeView(Application.models));
           return this;
         },
         "home": () => {
-          loadViewAndObserve(this, new HomeView());
+          loadViewAndObserve(this, new HomeView(Application.models));
           return this;
         },
         "manual": () => {

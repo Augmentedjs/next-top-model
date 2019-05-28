@@ -5,7 +5,7 @@ import ModelListTable from "./modelListTable.js";
 const MOUNT_POINT = "#main";
 
 class HomeView extends DirectiveView {
-  constructor() {
+  constructor(models) {
     super({
       "el": MOUNT_POINT,
       "name": "homeview",
@@ -17,7 +17,7 @@ class HomeView extends DirectiveView {
       <div id="modelListTable"></div>
       <button data-${this.name}="createmodel" data-click="createmodel" title="Create Model" class="round bottom right"><i class="material-icons md-light">add</i></button>
     `;
-    this.table = new ModelListTable();
+    this.table = new ModelListTable(models);
   };
 
   createmodel(e) {

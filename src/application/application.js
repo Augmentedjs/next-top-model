@@ -14,6 +14,7 @@ class Application extends BaseApplication {
     super(CONSTANTS.APP_NAME);
     this.router = new Router();
     this.title = CONSTANTS.APP_NAME;
+    this._models = [];
   };
 
   navigate(where, options) {
@@ -31,6 +32,14 @@ class Application extends BaseApplication {
   about() {
     const view = new AboutDialog();
     view.render();
+  };
+
+  saveModel(model) {
+    this._models.push(model);
+  };
+
+  get models() {
+    return this._models;
   };
 };
 

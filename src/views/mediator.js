@@ -95,8 +95,9 @@ class Mediator extends BaseMediator {
       Application.navigate("createmodel");
     });
 
-    this.on(ADD_CREATED_MODEL, () => {
-
+    this.on(ADD_CREATED_MODEL, (model) => {
+      Application.saveModel(model);
+      Application.navigate("home");
     });
   };
 };
