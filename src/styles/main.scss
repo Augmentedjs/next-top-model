@@ -234,11 +234,17 @@ h3 {
   div {
     &:hover {
       background-color: var(--secondary-color-light);
-      color: var(--light-text);
+      color: var(--dark-text);
     }
     &:first-child {
+      margin: 0;
+      padding-top: 1rem;
       background-color: var(--primary-color);
       color: var(--light-text);
+      &:hover {
+        background-color: var(--secondary-color-dark);
+        color: var(--light-text);
+      }
     }
   }
 }

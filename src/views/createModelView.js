@@ -38,7 +38,7 @@ class CreateModelView extends DirectiveView {
   async create(e) {
     e.preventDefault();
     const formdata = this._formdata;
-
+    
     return false;
   };
 
