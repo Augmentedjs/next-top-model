@@ -9,3 +9,5 @@ export const RESET = "reset";
 export const GENERATE = "generate";
 
 export const CREATE_MODEL = "createmodel";
+
+export const ADD_CREATED_MODEL = "addcreatedmodel";

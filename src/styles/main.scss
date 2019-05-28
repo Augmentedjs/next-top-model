@@ -59,9 +59,7 @@ body {
 }
 
 input {
-  &[type=email] {
-    background-color: transparent;
-  }
+  background-color: transparent;
   &[type=text] {
     width: 9.5rem;
   }
@@ -196,6 +194,7 @@ h3 {
     margin: 1rem 0 .5rem;
   }
   form {
+    min-width: 50rem;
     div {
       display: inline-block;
       width: 47vw;
@@ -214,8 +213,44 @@ h3 {
   line-height: 1.5rem;
 }
 
+.props {
+  list-style: none;
+  li {
+
+    label, input[type=checkbox] {
+      display: inline-block;
+    }
+    input[type=checkbox] {
+      margin: 1.25rem 1rem 0 0;
+    }
+    label {
+      vertical-align: top;
+      margin: 0 1rem 0 0;
+    }
+  }
+}
+
+.menu {
+  div {
+    &:hover {
+      background-color: var(--secondary-color-light);
+      color: var(--dark-text);
+    }
+    &:first-child {
+      margin: 0;
+      padding-top: 1rem;
+      background-color: var(--primary-color);
+      color: var(--light-text);
+      &:hover {
+        background-color: var(--secondary-color-dark);
+        color: var(--light-text);
+      }
+    }
+  }
+}
+
 .controlpanel {
-  margin: 1rem;
+  margin: 3rem 1rem 1rem 1rem;
   button {
     display: inline-block;
     margin-left: 0;

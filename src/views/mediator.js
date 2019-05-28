@@ -13,7 +13,8 @@ import {
   VALIDATE,
   RESET,
   GENERATE,
-  CREATE_MODEL
+  CREATE_MODEL,
+  ADD_CREATED_MODEL
 } from "../messages.js";
 
 const displayErrorMessage = async (message, context) => {
@@ -92,6 +93,11 @@ class Mediator extends BaseMediator {
 
     this.on(CREATE_MODEL, () => {
       Application.navigate("createmodel");
+    });
+
+    this.on(ADD_CREATED_MODEL, (model) => {
+      Application.saveModel(model);
+      Application.navigate("home");
     });
   };
 };
