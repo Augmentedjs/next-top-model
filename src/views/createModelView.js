@@ -23,7 +23,7 @@ class CreateModelView extends DirectiveView {
           <textarea data-${this.name}="desc" name="desc" class="small"></textarea>
         </label>
         <label for="${PROPERTY_LIST}">Properties</label>
-        <ul id="${PROPERTY_LIST}">
+        <ul id="${PROPERTY_LIST}" class="props">
         </ul>
       </form>
       <div id="controlpanel" class="controlpanel">
@@ -57,7 +57,19 @@ class CreateModelView extends DirectiveView {
   async rem(e) {
     e.preventDefault();
     const formdata = this._formdata;
-    console.log("selected", formdata.getAll("select"));
+    if (formdata) {
+      const selected = formdata.getAll("select");
+      if (selected) {
+        const l = selected.length;
+        let i = 0;
+        for (i; i < l; i++) {
+          const prop = document.getElementById(selected[i]);
+          if (prop) {
+            prop.parentNode.removeChild(prop);
+          }
+        }
+      }
+    }
     return false;
   };
 
@@ -66,17 +78,18 @@ class CreateModelView extends DirectiveView {
     const list = Dom.selector(`#${PROPERTY_LIST}`);
     if (list) {
       const li = document.createElement("li");
+      li.id = `prop_${this._props}`;
       li.innerHTML = `
-        <input type="checkbox" name="select" value="${this._props}"/>
+        <input type="checkbox" name="select" value="prop_${this._props}"/>
         <label>Type
-          <select name="type">
+          <select name="type" required="required">
             <option value="string">String</option>
             <option value="number">Number</option>
             <option value="array">Array</option>
           </select>
         </label>
         <label>Name
-          <input type="text" name="name" placeholder="Name"/>
+          <input type="text" name="name" placeholder="Name" required="required"/>
         </label>
         <label>Min
           <input type="number" name="min" min="0" class="hidden"/>
@@ -111,8 +124,8 @@ class CreateModelView extends DirectiveView {
 
   async render() {
     await super.render();
-    this.syncBoundElement("name");
-    this.syncBoundElement("desc");
+    //this.syncBoundElement("name");
+    //this.syncBoundElement("desc");
     this.delegateEvents();
     return this;
   };

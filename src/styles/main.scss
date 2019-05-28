@@ -59,9 +59,7 @@ body {
 }
 
 input {
-  &[type=email] {
-    background-color: transparent;
-  }
+  background-color: transparent;
   &[type=text] {
     width: 9.5rem;
   }
@@ -214,8 +212,27 @@ h3 {
   line-height: 1.5rem;
 }
 
+.props {
+  list-style: none;
+  li {
+
+    label, input[type=checkbox] {
+      display: inline-block;
+    }
+    input[type=checkbox] {
+      margin: 1.25rem 1rem 0 0;
+    }
+    label {
+      vertical-align: top;
+      margin: 0 1rem 0 0;
+    }
+  }
+
+
+}
+
 .controlpanel {
-  margin: 1rem;
+  margin: 3rem 1rem 1rem 1rem;
   button {
     display: inline-block;
     margin-left: 0;
