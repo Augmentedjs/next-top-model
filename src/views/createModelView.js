@@ -1,5 +1,6 @@
 import { DirectiveView } from "presentation-decorator";
 import Dom from "presentation-dom";
+import { ADD_CREATED_MODEL } from "../messages.js";
 
 const MOUNT_POINT = "#main",
       PROPERTY_LIST = "props",
@@ -38,7 +39,7 @@ class CreateModelView extends DirectiveView {
   async create(e) {
     e.preventDefault();
     const formdata = this._formdata;
-    
+    this.sendMessage(ADD_CREATED_MODEL, formdata);
     return false;
   };
 
