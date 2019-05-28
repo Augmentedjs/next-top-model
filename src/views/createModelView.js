@@ -2,7 +2,8 @@ import { DirectiveView } from "presentation-decorator";
 import Dom from "presentation-dom";
 
 const MOUNT_POINT = "#main",
-      PROPERTY_LIST = "props";
+      PROPERTY_LIST = "props",
+      MODEL_FORM = "model_form";
 
 class CreateModelView extends DirectiveView {
   constructor() {
@@ -14,9 +15,9 @@ class CreateModelView extends DirectiveView {
 
     this.template = `
       <h1>Create Model</h1>
-      <form>
+      <form id="${MODEL_FORM}" name="${MODEL_FORM}">
         <label>Name
-          <input data-${this.name}="name" type="text" name="name"/>
+          <input data-${this.name}="name" type="text" name="name" required="required"/>
         </label>
         <label>Description
           <textarea data-${this.name}="desc" name="desc" class="small"></textarea>
@@ -26,20 +27,49 @@ class CreateModelView extends DirectiveView {
         </ul>
       </form>
       <div id="controlpanel" class="controlpanel">
+        <button data-${this.name}="create" data-click="create" class="primary">Create</button>
         <button data-${this.name}="add" data-click="add">Add Property</button>
+        <button data-${this.name}="rem" data-click="rem">Remove Properties</button>
       </div>
     `;
+    this._props = 0;
+  };
+
+  async create(e) {
+    e.preventDefault();
+    const formdata = this._formdata;
+
+    return false;
+  };
+
+  get _formdata() {
+    const form = document.getElementById(MODEL_FORM);
+    let formdata = null;
+    if (form) {
+      formdata = new FormData(form);
+      for(let pair of formdata.entries()) {
+        console.log(pair[0]+ ', '+ pair[1]);
+      }
+    }
+    return formdata;
+  };
+
+  async rem(e) {
+    e.preventDefault();
+    const formdata = this._formdata;
+    console.log("selected", formdata.getAll("select"));
+    return false;
   };
 
   async add(e) {
-    console.log("Adding...");
     e.preventDefault();
     const list = Dom.selector(`#${PROPERTY_LIST}`);
     if (list) {
       const li = document.createElement("li");
       li.innerHTML = `
+        <input type="checkbox" name="select" value="${this._props}"/>
         <label>Type
-          <select>
+          <select name="type">
             <option value="string">String</option>
             <option value="number">Number</option>
             <option value="array">Array</option>
@@ -58,14 +88,15 @@ class CreateModelView extends DirectiveView {
           <input type="type" name="regex"/>
         </label>
       `;
-      const button = document.createElement("button");
-      button.dataset[this.name] = "removeprop";
-      button.dataset.click = "removeprop";
-      button.innerHTML = `<i class="material-icons md-dark">clear</i>`;
-      li.append(button);
+      // const button = document.createElement("button");
+      // button.dataset[this.name] = "removeprop";
+      // button.dataset.click = "removeprop";
+      // button.innerHTML = `<i class="material-icons md-dark">clear</i>`;
+      // li.append(button);
       await list.append(li);
+      this._props++;
     }
-    return this;
+    return false;
   };
 
   async removeprop(e) {
