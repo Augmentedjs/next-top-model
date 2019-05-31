@@ -1,6 +1,6 @@
 import { DirectiveView } from "presentation-decorator";
 import Dom from "presentation-dom";
-import { ADD_CREATED_MODEL } from "../messages.js";
+import { ADD_CREATED_MODEL, NAVIGATION } from "../messages.js";
 
 const MOUNT_POINT = "#main",
       PROPERTY_LIST = "props",
@@ -31,9 +31,16 @@ class CreateModelView extends DirectiveView {
         <button data-${this.name}="create" data-click="create" class="primary">Create</button>
         <button data-${this.name}="add" data-click="add">Add Property</button>
         <button data-${this.name}="rem" data-click="rem">Remove Properties</button>
+        <button data-${this.name}="cancel" data-click="cancel">Cancel</button>
       </div>
     `;
     this._props = 0;
+  };
+
+  async cancel(e) {
+    e.preventDefault();
+    this.sendMessage(NAVIGATION, "home");
+    return false;
   };
 
   async create(e) {
