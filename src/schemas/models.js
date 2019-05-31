@@ -8,8 +8,8 @@ const MODELS = {
       "description": "Identifier",
       "type" : "string"
     },
-    "name": {
-      "description": "Name",
+    "title": {
+      "description": "Title",
       "type" : "string"
     }
   }

@@ -257,3 +257,11 @@ h3 {
     margin-right: 1rem;
   }
 }
+
+table {
+  &.material {
+    th {
+      text-transform: uppercase;
+    }
+  }
+}

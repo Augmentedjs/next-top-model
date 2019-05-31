@@ -12,6 +12,7 @@ class ModelListTable extends AutomaticTable {
       "title": "Model List",
       "schema": MODELS,
       "data": data,
+      "selectable": true,
       "sortable": true,
       "display": null,
       "style": "material",

@@ -17,8 +17,8 @@ class CreateModelView extends DirectiveView {
     this.template = `
       <h1>Create Model</h1>
       <form id="${MODEL_FORM}" name="${MODEL_FORM}">
-        <label>Name
-          <input data-${this.name}="name" type="text" name="name" required="required"/>
+        <label>Title
+          <input data-${this.name}="title" type="text" name="title" required="required"/>
         </label>
         <label>Description
           <textarea data-${this.name}="desc" name="desc" class="small"></textarea>
@@ -38,8 +38,11 @@ class CreateModelView extends DirectiveView {
 
   async create(e) {
     e.preventDefault();
-    const formdata = this._formdata;
-    this.sendMessage(ADD_CREATED_MODEL, formdata);
+    const data = {};
+    await this._formdata.forEach((value, key) => { data[key] = value });
+    data.identifier = data.title.replace(/[^0-9a-z]/gi, "_").toLowerCase();
+    console.debug("data", data);
+    this.sendMessage(ADD_CREATED_MODEL, data);
     return false;
   };
 
@@ -48,18 +51,18 @@ class CreateModelView extends DirectiveView {
     let formdata = null;
     if (form) {
       formdata = new FormData(form);
-      for(let pair of formdata.entries()) {
+      /*let pair;
+      for(pair of formdata.entries()) {
         console.log(pair[0]+ ', '+ pair[1]);
-      }
+      }*/
     }
     return formdata;
   };
 
   async rem(e) {
     e.preventDefault();
-    const formdata = this._formdata;
-    if (formdata) {
-      const selected = formdata.getAll("select");
+    if (this._formdata) {
+      const selected = this._formdata.getAll("select");
       if (selected) {
         const l = selected.length;
         let i = 0;
@@ -83,23 +86,23 @@ class CreateModelView extends DirectiveView {
       li.innerHTML = `
         <input type="checkbox" name="select" value="prop_${this._props}"/>
         <label>Type
-          <select name="type" required="required">
+          <select name="type_${this._props}" required="required">
             <option value="string">String</option>
             <option value="number">Number</option>
             <option value="array">Array</option>
           </select>
         </label>
         <label>Name
-          <input type="text" name="name" placeholder="Name" required="required"/>
+          <input type="text" name="name_${this._props}" placeholder="Name" required="required"/>
         </label>
         <label>Min
-          <input type="number" name="min" min="0" class="hidden"/>
+          <input type="number" name="min_${this._props}" min="0" class="hidden"/>
         </label>
         <label>Max
-          <input type="number" name="max" min="0" class="hidden"/>
+          <input type="number" name="max_${this._props}" min="0" class="hidden"/>
         </label>
         <label>Regex
-          <input type="type" name="regex"/>
+          <input type="type" name="regex_${this._props}"/>
         </label>
       `;
       await list.append(li);
