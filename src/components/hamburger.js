@@ -1,4 +1,4 @@
-import { HamburgerMenu as BaseHamburgerMenu } from "presentation-components";
+import { HamburgerMenu as BaseHamburgerMenu } from "presentation-navigation";
 import Application from "../application/application.js";
 import { APP_NAME } from "../constants.js";
 
