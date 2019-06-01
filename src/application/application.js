@@ -35,7 +35,15 @@ class Application extends BaseApplication {
   };
 
   saveModel(model) {
-    this._models.push(model);
+    if (model) {
+      this._models.push(model);
+    }
+    return this._models.length;
+  };
+
+  clearModels() {
+    this._models.length = 0;
+    return 0;
   };
 
   get models() {

@@ -8,6 +8,21 @@ import Logger from "../logger/logger.js";
 
 const initializeApp = async () => {
   try {
+
+    // TODO: remove this (cooking data)
+    let i = 0;
+    for (i; i < 10; i++) {
+      Application.saveModel({
+        "title": `Test${i}`,
+        "desc": `Test Model ${i}`,
+        "type_0": "string",
+        "name_0": "name",
+        "type_1": "string",
+        "name_1": "address",
+        "identifier": `test${1}`
+      });
+    }
+
     Application.registerStylesheet(FONT.FONTS);
 
     Application.mediator = new Mediator();
@@ -56,6 +71,7 @@ const initializeApp = async () => {
     if (!p) {
       throw new Error("Error starting application!");
     }
+
   } catch(e) {
     const err = `Error initializing Application - ${e}`;
     Logger.error(e);

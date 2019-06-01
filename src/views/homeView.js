@@ -1,7 +1,9 @@
 import { DirectiveView } from "presentation-decorator";
 import { CREATE_MODEL } from "../messages.js";
+import Application from "../application/application.js";
 import ModelListTable from "./modelListTable.js";
 import ControlPanel from "./controlPanel.js";
+import { PANEL } from "../messages.js";
 
 const MOUNT_POINT = "#main";
 
@@ -21,6 +23,7 @@ class HomeView extends DirectiveView {
       <div id="modelListTable"></div>
       <button data-${this.name}="createmodel" data-click="createmodel" title="Create Model" class="round bottom right"><i class="material-icons md-light">add</i></button>
     `;
+    console.debug("Models", models);
     this.table = new ModelListTable(models);
     this.controls = new ControlPanel();
   };
@@ -36,10 +39,14 @@ class HomeView extends DirectiveView {
     await this.controls.render();
     await this.table.render();
     this.delegateEvents();
+    Application.mediator.observeColleagueAndTrigger(this.table, PANEL, this.table.name);
+    Application.mediator.observeColleagueAndTrigger(this.controls, PANEL, this.controls.name);
     return this;
   };
 
   async remove() {
+    await Application.mediator.dismissColleagueTrigger(this.controls, PANEL, this.controls.name);
+    await Application.mediator.dismissColleagueTrigger(this.table, PANEL, this.table.name);
     await this.table.remove();
     await this.controls.remove();
     return super.remove();

@@ -1,4 +1,5 @@
 import { Menu } from "presentation-navigation";
+import { REMOVE_SELECTED_MODELS } from "../messages.js";
 
 const MOUNT_POINT = "#control";
 
@@ -15,6 +16,11 @@ class ControlPanel extends Menu {
       "clear",
       "Delete"
     );
+  };
+
+  async removeselected(e) {
+    console.debug("removeselected - click!!");
+    this.sendMessage(REMOVE_SELECTED_MODELS);
   };
 };
 

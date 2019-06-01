@@ -14,7 +14,8 @@ import {
   RESET,
   GENERATE,
   CREATE_MODEL,
-  ADD_CREATED_MODEL
+  ADD_CREATED_MODEL,
+  REMOVE_SELECTED_MODELS
 } from "../messages.js";
 
 const displayErrorMessage = async (message, context) => {
@@ -98,6 +99,10 @@ class Mediator extends BaseMediator {
     this.on(ADD_CREATED_MODEL, (model) => {
       Application.saveModel(model);
       Application.navigate("home");
+    });
+
+    this.on(REMOVE_SELECTED_MODELS, () => {
+      this.publish(PANEL, REMOVE_SELECTED_MODELS, REMOVE_SELECTED_MODELS);
     });
   };
 };

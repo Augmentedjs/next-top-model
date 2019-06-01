@@ -58,10 +58,6 @@ class CreateModelView extends DirectiveView {
     let formdata = null;
     if (form) {
       formdata = new FormData(form);
-      /*let pair;
-      for(pair of formdata.entries()) {
-        console.log(pair[0]+ ', '+ pair[1]);
-      }*/
     }
     return formdata;
   };
