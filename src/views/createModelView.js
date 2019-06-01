@@ -48,7 +48,7 @@ class CreateModelView extends DirectiveView {
     const data = {};
     await this._formdata.forEach((value, key) => { data[key] = value });
     data.identifier = data.title.replace(/[^0-9a-z]/gi, "_").toLowerCase();
-    console.debug("data", data);
+    //console.debug("data", data);
     this.sendMessage(ADD_CREATED_MODEL, data);
     return false;
   };
@@ -58,10 +58,6 @@ class CreateModelView extends DirectiveView {
     let formdata = null;
     if (form) {
       formdata = new FormData(form);
-      /*let pair;
-      for(pair of formdata.entries()) {
-        console.log(pair[0]+ ', '+ pair[1]);
-      }*/
     }
     return formdata;
   };
