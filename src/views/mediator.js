@@ -24,7 +24,6 @@ const displayErrorMessage = async (message, context) => {
     await context.messageDialog.remove();
     context.messageDialog = null;
   }
-  //Logger.debug(`Message ${message}`);
   context.messageDialog = new ErrorDialog({ "body": message });
   await context.messageDialog.render();
 };
@@ -34,7 +33,6 @@ const displayNotification = async (message, title, context) => {
     await context.notify.remove();
     context.notify = null;
   }
-  //Logger.debug(`Message ${message}`);
   context.notify = new Notification({
     "body": message,
     "title": title
@@ -47,7 +45,6 @@ const displayMessage = async (message, title, context) => {
     await context.messageDialog.remove();
     context.messageDialog = null;
   }
-  //Logger.debug(`Message ${message}`);
   context.messageDialog = new MessageDialog({
     "body": message,
     "title": title
