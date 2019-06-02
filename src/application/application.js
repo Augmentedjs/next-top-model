@@ -46,6 +46,19 @@ class Application extends BaseApplication {
     return 0;
   };
 
+  removeModels(models) {
+    if (models && models.length > 0 && this._models) {
+      let i = 0;
+      let newModels = this._models;
+      const l = models.length;
+      for(i; i < l; i++) {
+        newModels = newModels.filter(m => m.identifier !== models[i].identifier);
+      }
+      this._models = newModels;
+    }
+    return true;
+  };
+
   get models() {
     return this._models;
   };

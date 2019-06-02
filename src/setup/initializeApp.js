@@ -19,7 +19,7 @@ const initializeApp = async () => {
         "name_0": "name",
         "type_1": "string",
         "name_1": "address",
-        "identifier": `test${1}`
+        "identifier": `test${i}`
       });
     }
 

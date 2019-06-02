@@ -1,6 +1,10 @@
 import { AutomaticTable } from "presentation-table";
 import MODELS from "../schemas/models.js";
-import { PANEL, REMOVE_SELECTED_MODELS } from "../messages.js";
+import {
+  PANEL,
+  REMOVE_SELECTED_MODELS,
+  REMOVE_MODELS
+} from "../messages.js";
 
 const MOUNT_POINT = "#modelListTable";
 
@@ -28,11 +32,13 @@ class ModelListTable extends AutomaticTable {
       try {
         if (message === REMOVE_SELECTED_MODELS) {
           const selected = this.getSelected();
-          console.debug("selected", selected);
+          // TODO: this is broken in the table
+          this.removeRows(selected);
+          this.sendMessage(REMOVE_MODELS, this.getSelectedAsJSON());
         }
       } catch(e) {
-        console.debug(e);
-        //this.message = e.getMessage();
+        console.error(e);
+        this.showMessage(e);
       }
     });
   };
