@@ -75,7 +75,7 @@
     "presentation-models": "^2.6.3",
     "presentation-navigation": "^2.6.0",
     "presentation-router": "^2.6.6",
-    "presentation-table": "^2.7.0",
+    "presentation-table": "^2.7.1",
     "typeface-roboto": "0.0.54"
   }
 }
