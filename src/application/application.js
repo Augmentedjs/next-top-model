@@ -1,4 +1,5 @@
 import { Application as BaseApplication } from "presentation-application";
+import { LocalForage } from "presentation-forage-models";
 import Router from "../router/router.js";
 import Logger from "../logger/logger.js";
 import * as CONSTANTS from "../constants.js";
@@ -15,6 +16,7 @@ class Application extends BaseApplication {
     this.router = new Router();
     this.title = CONSTANTS.APP_NAME;
     this._models = [];
+    this._storage = new LocalForage();
   };
 
   navigate(where, options) {
@@ -30,8 +32,10 @@ class Application extends BaseApplication {
   };
 
   about() {
-    const view = new AboutDialog();
-    view.render();
+    if (!this._about) {
+      this._about = new AboutDialog();
+    }
+    this._about.render();
   };
 
   saveModel(model) {

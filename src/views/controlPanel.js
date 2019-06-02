@@ -19,7 +19,6 @@ class ControlPanel extends Menu {
   };
 
   async removeselected(e) {
-    console.debug("removeselected - click!!");
     this.sendMessage(REMOVE_SELECTED_MODELS);
   };
 };
