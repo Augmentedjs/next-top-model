@@ -6,29 +6,18 @@ import * as CONSTANTS from "../constants.js";
 import serialize from "presentation-router";
 import AboutDialog from "../components/aboutDialog.js";
 
-const getPlace = (where, options) => {
-  return (options) ? `${where}?${serialize(options)}` : where;
-};
+const MODELS = "top-model-models";
 
 class Application extends BaseApplication {
   constructor() {
-    super(CONSTANTS.APP_NAME);
-    this.router = new Router();
+    const options = {
+      "name": CONSTANTS.APP_NAME,
+      "datastore": new LocalForage(),
+      "router": new Router()
+    };
+
+    super(options);
     this.title = CONSTANTS.APP_NAME;
-    this._models = [];
-    this._storage = new LocalForage();
-  };
-
-  navigate(where, options) {
-    if (this.router && where) {
-      this.router.navigate(getPlace(where, options), { "trigger": true });
-    }
-  };
-
-  launch(where, options) {
-    if (this.router && where) {
-      this.router.navigate(getPlace(where, options), { "trigger": false });
-    }
   };
 
   about() {
@@ -39,32 +28,40 @@ class Application extends BaseApplication {
   };
 
   saveModel(model) {
-    if (model) {
-      this._models.push(model);
+    let models = this.datastore.getItem(MODELS);
+    if (!models) {
+      models = [];
     }
-    return this._models.length;
+
+    if (model && mode) {
+      models.push(model);
+    }
+    this.datastore.setItem(MODELS, models);
+    return models.length;
   };
 
   clearModels() {
-    this._models.length = 0;
+    let models = this.datastore.getItem(MODELS);
+    models.length = 0;
+    this.datastore.setItem(MODELS, models);
     return 0;
   };
 
   removeModels(models) {
-    if (models && models.length > 0 && this._models) {
+    if (models && models.length > 0 && this.datastore) {
       let i = 0;
-      let newModels = this._models;
+      let newModels = this.datastore.getItem(MODELS);
       const l = models.length;
       for(i; i < l; i++) {
         newModels = newModels.filter(m => m.identifier !== models[i].identifier);
       }
-      this._models = newModels;
+      this.datastore.setItem(MODELS, models);
     }
-    return true;
+    return l;
   };
 
   get models() {
-    return this._models;
+    return this.datastore.getItem(MODELS);
   };
 };
 
