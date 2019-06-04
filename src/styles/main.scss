@@ -267,5 +267,24 @@ table {
 }
 
 .toolbar {
-  right: 0;
+  height: 2rem;
+}
+
+.tools {
+  position: absolute;
+  min-width: 1.5rem;
+  right: 0.25rem;
+  width: 15rem;
+  text-align: right;
+
+  &:hover > i:nth-child(1)::after {
+    left: auto;
+    right: 0;
+  }
+
+  ul {
+    text-align: left;
+    right: 0.25rem;
+    left: auto;
+  }
 }

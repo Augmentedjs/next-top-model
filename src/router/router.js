@@ -7,6 +7,7 @@ import { PANEL } from "../messages.js";
 import HomeView from "../views/homeView.js";
 import ManualView from "../views/manualView.js";
 import CreateModelView from "../views/createModelView.js";
+import EditModelView from "../views/editModelView.js";
 
 const TRANSITION = {
   "in": 250,
@@ -18,18 +19,29 @@ const loadViewAndObserve = async (router, view) => {
   await Application.mediator.observeColleagueAndTrigger(view, PANEL, view.name);
 };
 
+const loadHome = async (router) => {
+  const models = await Application.models;
+  loadViewAndObserve(router, new HomeView(models));
+  return router;
+};
+
+const loadEditModel = async (router) => {
+  const models = await Application.models;
+  const model = models[0];
+  loadViewAndObserve(router, new EditModelView(model));
+  return router;
+};
+
 class Router extends BaseRouter {
   constructor() {
     super({
       "transition": TRANSITION,
       "routes": {
         "": () => {
-          loadViewAndObserve(this, new HomeView(Application.models));
-          return this;
+          return loadHome(this);
         },
         "home": () => {
-          loadViewAndObserve(this, new HomeView(Application.models));
-          return this;
+          return loadHome(this);
         },
         "manual": () => {
           loadViewAndObserve(this, new ManualView());
@@ -38,6 +50,9 @@ class Router extends BaseRouter {
         "createmodel": () => {
           loadViewAndObserve(this, new CreateModelView());
           return this;
+        },
+        "models/:id": () => {
+          return loadEditModel(this);
         }
       }
     });

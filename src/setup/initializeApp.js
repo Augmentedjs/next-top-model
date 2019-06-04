@@ -10,9 +10,9 @@ const initializeApp = async () => {
   try {
 
     // TODO: remove this (cooking data)
-    let i = 0;
+    /*let i = 0;
     for (i; i < 10; i++) {
-      Application.saveModel({
+      await Application.saveModel({
         "title": `Test${i}`,
         "desc": `Test Model ${i}`,
         "type_0": "string",
@@ -21,7 +21,7 @@ const initializeApp = async () => {
         "name_1": "address",
         "identifier": `test${i}`
       });
-    }
+    }*/
 
     Application.registerStylesheet(FONT.FONTS);
 

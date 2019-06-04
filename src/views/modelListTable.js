@@ -24,7 +24,7 @@ class ModelListTable extends AutomaticTable {
     	"links": {
     		"column": "identifier",
     		"link": "rowLink",
-    		"wholeRow": false
+    		"wholeRow": true
       }
     });
 
@@ -52,7 +52,7 @@ class ModelListTable extends AutomaticTable {
   };
 
   rowLink(row) {
-		return `/#${row["type"]}s/${row["identifier"]}`;
+		return `/#models/${row["identifier"]}`;
   };
 };
 

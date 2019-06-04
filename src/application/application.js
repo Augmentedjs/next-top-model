@@ -12,12 +12,12 @@ class Application extends BaseApplication {
   constructor() {
     const options = {
       "name": CONSTANTS.APP_NAME,
-      "datastore": new LocalForage(),
       "router": new Router()
     };
 
     super(options);
     this.title = CONSTANTS.APP_NAME;
+    this.datastore = new LocalForage();
   };
 
   about() {
@@ -27,35 +27,36 @@ class Application extends BaseApplication {
     this._about.render();
   };
 
-  saveModel(model) {
-    let models = this.datastore.getItem(MODELS);
-    if (!models) {
-      models = [];
-    }
-
-    if (model && mode) {
+  async saveModel(model) {
+    if (model) {
+      let models = await this.datastore.getItem(MODELS);
+      if (!models || !Array.isArray(models)) {
+        models = [];
+      }
       models.push(model);
+      //console.debug("models", models);
+      await this.datastore.setItem(MODELS, models);
+      return models.length;
     }
-    this.datastore.setItem(MODELS, models);
-    return models.length;
   };
 
-  clearModels() {
-    let models = this.datastore.getItem(MODELS);
+  async clearModels() {
+    let models = await this.datastore.getItem(MODELS);
     models.length = 0;
-    this.datastore.setItem(MODELS, models);
+    await this.datastore.setItem(MODELS, models);
     return 0;
   };
 
-  removeModels(models) {
+  async removeModels(models) {
+    let l = 0;
     if (models && models.length > 0 && this.datastore) {
       let i = 0;
-      let newModels = this.datastore.getItem(MODELS);
-      const l = models.length;
+      let newModels = await this.datastore.getItem(MODELS);
+      l = models.length;
       for(i; i < l; i++) {
-        newModels = newModels.filter(m => m.identifier !== models[i].identifier);
+        newModels = await newModels.filter(m => m.identifier !== models[i].identifier);
       }
-      this.datastore.setItem(MODELS, models);
+      await this.datastore.setItem(MODELS, models);
     }
     return l;
   };

@@ -7,7 +7,7 @@ const MOUNT_POINT = "#main",
       MODEL_FORM = "model_form";
 
 class CreateModelView extends DirectiveView {
-  constructor() {
+  constructor(model) {
     super({
       "el": MOUNT_POINT,
       "name": "createmodelview",
@@ -15,20 +15,21 @@ class CreateModelView extends DirectiveView {
     });
 
     this.template = `
-      <h1>Create Model</h1>
+      <h1>Edit Model</h1>
       <form id="${MODEL_FORM}" name="${MODEL_FORM}">
         <label>Title
-          <input data-${this.name}="title" type="text" name="title" required="required"/>
+          <input data-${this.name}="title" type="text" name="title" required="required" value="${model.title}"/>
         </label>
         <label>Description
-          <textarea data-${this.name}="desc" name="desc" class="small"></textarea>
+          <textarea data-${this.name}="desc" name="desc" class="small">${model.desc}</textarea>
         </label>
         <label for="${PROPERTY_LIST}">Properties</label>
         <ul id="${PROPERTY_LIST}" class="props">
+          ${addProperties()}
         </ul>
       </form>
       <div id="controlpanel" class="controlpanel">
-        <button data-${this.name}="create" data-click="create" class="primary">Create</button>
+        <button data-${this.name}="save" data-click="save" class="primary">Save</button>
         <button data-${this.name}="add" data-click="add">Add Property</button>
         <button data-${this.name}="rem" data-click="rem">Remove Properties</button>
         <button data-${this.name}="cancel" data-click="cancel">Cancel</button>
@@ -43,7 +44,7 @@ class CreateModelView extends DirectiveView {
     return false;
   };
 
-  async create(e) {
+  async save(e) {
     e.preventDefault();
     const data = {};
     await this._formdata.forEach((value, key) => { data[key] = value });
@@ -84,35 +85,38 @@ class CreateModelView extends DirectiveView {
     e.preventDefault();
     const list = Dom.selector(`#${PROPERTY_LIST}`);
     if (list) {
-      const li = document.createElement("li");
-      li.id = `prop_${this._props}`;
-      li.dataset.index = this._props;
-      li.innerHTML = `
-        <input type="checkbox" name="select" value="prop_${this._props}"/>
-        <label>Type
-          <select name="type_${this._props}" required="required">
-            <option value="string">String</option>
-            <option value="number">Number</option>
-            <option value="array">Array</option>
-          </select>
-        </label>
-        <label>Name
-          <input type="text" name="name_${this._props}" placeholder="Name" required="required"/>
-        </label>
-        <label>Min
-          <input type="number" name="min_${this._props}" min="0" class="hidden"/>
-        </label>
-        <label>Max
-          <input type="number" name="max_${this._props}" min="0" class="hidden"/>
-        </label>
-        <label>Regex
-          <input type="type" name="regex_${this._props}"/>
-        </label>
-      `;
-      await list.append(li);
-      this._props++;
+      this._addProperty(list);
     }
     return false;
+  };
+
+  _addProperty(el, model) {
+    const li = document.createElement("li");
+    li.id = `prop_${this._props}`;
+    li.innerHTML = `
+      <input type="checkbox" name="select" value="prop_${this._props}"/>
+      <label>Type
+        <select name="type_${this._props}" required="required">
+          <option value="string">String</option>
+          <option value="number">Number</option>
+          <option value="array">Array</option>
+        </select>
+      </label>
+      <label>Name
+        <input type="text" name="name_${this._props}" placeholder="Name" required="required"/>
+      </label>
+      <label>Min
+        <input type="number" name="min_${this._props}" min="0" class="hidden"/>
+      </label>
+      <label>Max
+        <input type="number" name="max_${this._props}" min="0" class="hidden"/>
+      </label>
+      <label>Regex
+        <input type="type" name="regex_${this._props}"/>
+      </label>
+    `;
+    await list.append(li);
+    this._props++;
   };
 
   async removeprop(e) {
