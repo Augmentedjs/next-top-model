@@ -14,8 +14,11 @@ const parseModel = async (data) => {
     "properties": []
   };
 
+  model.identifier = await data.title.replace(/[^0-9a-z]/gi, "_").toLowerCase();
+
+  // add properties
   await Object.keys(data).forEach( (key) => {
-  	const value = (data[key]); // value
+  	const value = (data[key]);
     const keyAndIndex = key.split(DELIMETER);
     const prop = model.properties[keyAndIndex[1]] || {};
     prop[keyAndIndex[0]] = value;
@@ -65,10 +68,7 @@ class CreateModelView extends DirectiveView {
     e.preventDefault();
     const data = {};
     await this._formdata.forEach((value, key) => { data[key] = value });
-    data.identifier = await data.title.replace(/[^0-9a-z]/gi, "_").toLowerCase();
-
     const model = await parseModel(data);
-
     console.debug("data", data, "model", model);
     this.sendMessage(ADD_CREATED_MODEL, model);
     return false;

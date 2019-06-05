@@ -16,7 +16,8 @@ import {
   CREATE_MODEL,
   ADD_CREATED_MODEL,
   REMOVE_SELECTED_MODELS,
-  REMOVE_MODELS
+  REMOVE_MODELS,
+  TABLE_REFRESH
 } from "../messages.js";
 
 const displayErrorMessage = async (message, context) => {
@@ -50,6 +51,12 @@ const displayMessage = async (message, title, context) => {
     "title": title
   });
   await context.messageDialog.render();
+};
+
+const saveAndShow = async (model) => {
+  await Application.saveModel(model);
+  await Application.navigate("home");
+  return true;
 };
 
 class Mediator extends BaseMediator {
@@ -95,8 +102,7 @@ class Mediator extends BaseMediator {
     });
 
     this.on(ADD_CREATED_MODEL, (model) => {
-      Application.saveModel(model);
-      Application.navigate("home");
+      saveAndShow(model);
     });
 
     this.on(REMOVE_SELECTED_MODELS, () => {
@@ -104,9 +110,22 @@ class Mediator extends BaseMediator {
     });
 
     this.on(REMOVE_MODELS, (models) => {
-      Application.removeModels(models);
-      console.debug("Remove these", models);
-      console.debug("new ones", Application.models);
+      const mediator = this;
+      return new Promise( (resolve, reject) => {
+        const l = Application.removeModels(models);
+        if (l) {
+          resolve(l);
+        } else {
+          reject(0);
+        }
+      })
+      .then( () => {
+        mediator.publish(PANEL, TABLE_REFRESH, TABLE_REFRESH);
+        return true;
+      })
+      .catch( (e) => {
+        Logger.error(e);
+      });
     });
   };
 };

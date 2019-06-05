@@ -3,7 +3,7 @@ const webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+//const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   entry: ["./src/index.js"],
@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
-    chunkFilename: '[name].js'
+    chunkFilename: "[name].js"
   },
   module: {
     rules: [
@@ -28,7 +28,7 @@ module.exports = {
         use: [
           { "loader": "file-loader",
           options: {
-            name: '[name].[ext]',
+            name: "[name].[ext]",
           }}
         ]
       },
@@ -37,7 +37,7 @@ module.exports = {
         use: [
           { "loader": "file-loader",
           options: {
-            name: '[name].[ext]',
+            name: "[name].[ext]",
           }}
         ]
       },
@@ -63,7 +63,9 @@ module.exports = {
   stats: "errors-only",
   devtool: "source-map",
   plugins: [
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      verbose: true
+    }),
     new HtmlWebPackPlugin({
       template: "./src/index.html",
       filename: "index.html",
@@ -90,7 +92,7 @@ module.exports = {
         // vendor chunk
         vendor: {
           // sync + async chunks
-          chunks: 'all',
+          chunks: "all",
 
           // import file path containing node_modules
           test: /node_modules/
