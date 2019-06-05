@@ -4,7 +4,25 @@ import { ADD_CREATED_MODEL, NAVIGATION } from "../messages.js";
 
 const MOUNT_POINT = "#main",
       PROPERTY_LIST = "props",
-      MODEL_FORM = "model_form";
+      MODEL_FORM = "model_form",
+      DELIMETER = "_";
+
+const parseModel = async (data) => {
+  const model = {
+    "title": data.title,
+    "description": data.desc,
+    "properties": []
+  };
+
+  await Object.keys(data).forEach( (key) => {
+  	const value = (data[key]); // value
+    const keyAndIndex = key.split(DELIMETER);
+    const prop = model.properties[keyAndIndex[1]] || {};
+    prop[keyAndIndex[0]] = value;
+    model.properties[keyAndIndex[1]] = prop;
+  });
+  return model;
+};
 
 class CreateModelView extends DirectiveView {
   constructor() {
@@ -47,9 +65,12 @@ class CreateModelView extends DirectiveView {
     e.preventDefault();
     const data = {};
     await this._formdata.forEach((value, key) => { data[key] = value });
-    data.identifier = data.title.replace(/[^0-9a-z]/gi, "_").toLowerCase();
-    //console.debug("data", data);
-    this.sendMessage(ADD_CREATED_MODEL, data);
+    data.identifier = await data.title.replace(/[^0-9a-z]/gi, "_").toLowerCase();
+
+    const model = await parseModel(data);
+
+    console.debug("data", data, "model", model);
+    this.sendMessage(ADD_CREATED_MODEL, model);
     return false;
   };
 
@@ -106,7 +127,11 @@ class CreateModelView extends DirectiveView {
           <input type="number" name="max_${this._props}" min="0" class="hidden"/>
         </label>
         <label>Regex
-          <input type="type" name="regex_${this._props}"/>
+          <input type="type" name="regex_${this._props}" class="hidden"/>
+        </label>
+        <label>
+          <input type="checkbox" name="required_${this._props}"/>
+          Required
         </label>
       `;
       await list.append(li);
@@ -127,8 +152,6 @@ class CreateModelView extends DirectiveView {
 
   async render() {
     await super.render();
-    //this.syncBoundElement("name");
-    //this.syncBoundElement("desc");
     this.delegateEvents();
     return this;
   };

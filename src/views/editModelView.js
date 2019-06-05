@@ -90,29 +90,33 @@ class CreateModelView extends DirectiveView {
     return false;
   };
 
-  _addProperty(el, model) {
+  async _addProperty(el, model) {
     const li = document.createElement("li");
     li.id = `prop_${this._props}`;
     li.innerHTML = `
       <input type="checkbox" name="select" value="prop_${this._props}"/>
       <label>Type
-        <select name="type_${this._props}" required="required">
+        <select name="type_${this._props}" required="required" value="${model.type}">
           <option value="string">String</option>
           <option value="number">Number</option>
           <option value="array">Array</option>
         </select>
       </label>
       <label>Name
-        <input type="text" name="name_${this._props}" placeholder="Name" required="required"/>
+        <input type="text" name="name_${this._props}" placeholder="Name" required="required" value="${model.name}"/>
       </label>
       <label>Min
-        <input type="number" name="min_${this._props}" min="0" class="hidden"/>
+        <input type="number" name="min_${this._props}" min="0" class="hidden" value="${model.min}"/>
       </label>
       <label>Max
-        <input type="number" name="max_${this._props}" min="0" class="hidden"/>
+        <input type="number" name="max_${this._props}" min="0" class="hidden" value="${model.max}"/>
       </label>
       <label>Regex
-        <input type="type" name="regex_${this._props}"/>
+        <input type="type" name="regex_${this._props}" value="${model.regex}"/>
+      </label>
+      <label>
+        <input type="checkbox" name="required_${this._props}" ${model.required ? "checked=\"checked\"" : ""}/>
+        Required
       </label>
     `;
     await list.append(li);
