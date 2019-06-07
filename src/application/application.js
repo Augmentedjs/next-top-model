@@ -2,7 +2,7 @@ import { Application as BaseApplication } from "presentation-application";
 import { LocalForage } from "presentation-forage-models";
 import Router from "../router/router.js";
 import Logger from "../logger/logger.js";
-import * as CONSTANTS from "../constants.js";
+import { APP_NAME, STORAGE_KEY } from "../constants.js";
 import serialize from "presentation-router";
 import AboutDialog from "../components/aboutDialog.js";
 
@@ -11,13 +11,16 @@ const MODELS = "top-model-models";
 class Application extends BaseApplication {
   constructor() {
     const options = {
-      "name": CONSTANTS.APP_NAME,
+      "name": APP_NAME,
       "router": new Router()
     };
 
     super(options);
-    this.title = CONSTANTS.APP_NAME;
-    this.datastore = new LocalForage();
+    this.title = APP_NAME;
+    this.datastore = new LocalForage({
+      "name": STORAGE_KEY,
+      "storeName": STORAGE_KEY
+    });
   };
 
   about() {
