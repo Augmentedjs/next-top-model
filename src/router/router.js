@@ -20,15 +20,19 @@ const loadViewAndObserve = async (router, view) => {
 };
 
 const loadHome = async (router) => {
-  const models = await Application.models;
+  const models = await Application.datastore.models;
   loadViewAndObserve(router, new HomeView(models));
   return router;
 };
 
-const loadEditModel = async (router) => {
-  const models = await Application.models;
-  const model = models[0];
-  loadViewAndObserve(router, new EditModelView(model));
+const loadEditModel = async (router, identifier) => {
+  const models = await Application.datastore.models;
+  const model = models[identifier];
+  if (model) {
+    loadViewAndObserve(router, new EditModelView(model));
+  } else {
+    Application.mediator.displayErrorMessage(`Could not load model ${identifier}`);
+  }
   return router;
 };
 
@@ -51,8 +55,8 @@ class Router extends BaseRouter {
           loadViewAndObserve(this, new CreateModelView());
           return this;
         },
-        "models/:id": () => {
-          return loadEditModel(this);
+        "models/:id": (id) => {
+          return loadEditModel(this, id);
         }
       }
     });

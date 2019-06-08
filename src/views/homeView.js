@@ -4,8 +4,22 @@ import Application from "../application/application.js";
 import ModelListTable from "./modelListTable.js";
 import ControlPanel from "./controlPanel.js";
 import { PANEL } from "../messages.js";
+import Logger from "../logger/logger.js";
 
-const MOUNT_POINT = "#main";
+const MOUNT_POINT = "#main",
+build = async (view, models) => {
+  try {
+    Logger.debug("Models", models);
+    let list = (models) ? await Object.values(models) : [];
+    if (!list) {
+      list = [];
+    }
+    view.table = new ModelListTable(list);
+    view.controls = new ControlPanel();
+  } catch(e) {
+    Logger.error(e);
+  }
+};
 
 class HomeView extends DirectiveView {
   constructor(models) {
@@ -21,11 +35,11 @@ class HomeView extends DirectiveView {
         <nav id="control"></nav>
       </div>
       <div id="modelListTable"></div>
-      <button data-${this.name}="createmodel" data-click="createmodel" title="Create Model" class="round bottom right"><i class="material-icons md-light">add</i></button>
+      <button data-${this.name}="createmodel" data-click="createmodel" title="Create Model" class="round bottom right">
+        <i class="material-icons md-light">add</i>
+      </button>
     `;
-    console.debug("Models", models);
-    this.table = new ModelListTable(models);
-    this.controls = new ControlPanel();
+    build(this, models);
   };
 
   createmodel(e) {

@@ -42,7 +42,7 @@ class CreateModelView extends DirectiveView {
           <input data-${this.name}="title" type="text" name="title" required="required"/>
         </label>
         <label>Description
-          <textarea data-${this.name}="desc" name="desc" class="small"></textarea>
+          <textarea data-${this.name}="desc" name="description" class="small"></textarea>
         </label>
         <label for="${PROPERTY_LIST}">Properties</label>
         <ul id="${PROPERTY_LIST}" class="props">

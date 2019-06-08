@@ -56,7 +56,7 @@
     "url-loader": "^2.0.0",
     "webpack": "^4.33.0",
     "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-cli": "^3.3.2",
+    "webpack-cli": "^3.3.3",
     "whatwg-fetch": "^3.0.0",
     "winston": "^3.2.1"
   },
@@ -70,7 +70,7 @@
     "presentation-css": "^3.1.7",
     "presentation-decorator": "^2.6.3",
     "presentation-dom": "^2.8.2",
-    "presentation-forage-models": "^2.3.0",
+    "presentation-forage-models": "^2.3.1",
     "presentation-logger": "^2.5.5",
     "presentation-models": "^2.6.3",
     "presentation-navigation": "^2.6.0",

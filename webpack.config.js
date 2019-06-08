@@ -63,9 +63,7 @@ module.exports = {
   stats: "errors-only",
   devtool: "source-map",
   plugins: [
-    new CleanWebpackPlugin({
-      verbose: true
-    }),
+    new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
       template: "./src/index.html",
       filename: "index.html",
@@ -76,6 +74,9 @@ module.exports = {
       // both options are optional
       filename: "[name].css",
       chunkFilename: "[id].css"
+    }),
+    new webpack.DefinePlugin({
+      VERSION: JSON.stringify(require("./package.json").version)
     })
     /*,
     new BundleAnalyzerPlugin()*/

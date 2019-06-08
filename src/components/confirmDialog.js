@@ -2,6 +2,7 @@ import { ConfirmationDialogView } from "presentation-components";
 
 class ConfirmDialog extends ConfirmationDialogView {
   constructor(options) {
+    options.el = "#dialogs";
     super(options);
   };
 

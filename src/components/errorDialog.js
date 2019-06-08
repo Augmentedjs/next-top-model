@@ -5,6 +5,7 @@ class ErrorDialog extends AlertDialogView {
     if (!options) {
       options = {}
     };
+    options.el = "#dialogs";
     if (!options.buttons) {
       options.buttons = {};
     }

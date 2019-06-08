@@ -1,40 +1,53 @@
 import { DirectiveView } from "presentation-decorator";
 import Dom from "presentation-dom";
 import { ADD_CREATED_MODEL, NAVIGATION } from "../messages.js";
+import Logger from "../logger/logger.js";
 
 const MOUNT_POINT = "#main",
       PROPERTY_LIST = "props",
       MODEL_FORM = "model_form";
 
-class CreateModelView extends DirectiveView {
+class EditModelView extends DirectiveView {
   constructor(model) {
     super({
       "el": MOUNT_POINT,
-      "name": "createmodelview",
+      "name": "editmodelview",
       "style": "view"
     });
 
-    this.template = `
-      <h1>Edit Model</h1>
-      <form id="${MODEL_FORM}" name="${MODEL_FORM}">
-        <label>Title
-          <input data-${this.name}="title" type="text" name="title" required="required" value="${model.title}"/>
-        </label>
-        <label>Description
-          <textarea data-${this.name}="desc" name="desc" class="small">${model.desc}</textarea>
-        </label>
-        <label for="${PROPERTY_LIST}">Properties</label>
-        <ul id="${PROPERTY_LIST}" class="props">
-          ${addProperties()}
-        </ul>
-      </form>
-      <div id="controlpanel" class="controlpanel">
-        <button data-${this.name}="save" data-click="save" class="primary">Save</button>
-        <button data-${this.name}="add" data-click="add">Add Property</button>
-        <button data-${this.name}="rem" data-click="rem">Remove Properties</button>
-        <button data-${this.name}="cancel" data-click="cancel">Cancel</button>
-      </div>
-    `;
+    console.debug(model);
+
+    if (model) {
+      this.template = `
+        <h1>Edit Model</h1>
+        <form id="${MODEL_FORM}" name="${MODEL_FORM}">
+          <label>Title
+            <input data-${this.name}="title" type="text" name="title" required="required" value="${model.title}"/>
+          </label>
+          <label>Description
+            <textarea data-${this.name}="desc" name="description" class="small">${model.description}</textarea>
+          </label>
+          <label for="${PROPERTY_LIST}">Properties</label>
+          <ul id="${PROPERTY_LIST}" class="props">
+            ${this._addProperties(model)}
+          </ul>
+        </form>
+        <div id="controlpanel" class="controlpanel">
+          <button data-${this.name}="save" data-click="save" class="primary">Save</button>
+          <button data-${this.name}="add" data-click="add">Add Property</button>
+          <button data-${this.name}="rem" data-click="rem">Remove Properties</button>
+          <button data-${this.name}="cancel" data-click="cancel">Cancel</button>
+        </div>
+      `;
+    } else {
+      this.template = `
+        <h1>Edit Model</h1>
+        <p class="red">Problem loading model</p>
+        <div id="controlpanel" class="controlpanel">
+          <button data-${this.name}="cancel" data-click="cancel">Cancel</button>
+        </div>
+      `;
+    }
     this._props = 0;
   };
 
@@ -49,7 +62,6 @@ class CreateModelView extends DirectiveView {
     const data = {};
     await this._formdata.forEach((value, key) => { data[key] = value });
     data.identifier = data.title.replace(/[^0-9a-z]/gi, "_").toLowerCase();
-    //console.debug("data", data);
     this.sendMessage(ADD_CREATED_MODEL, data);
     return false;
   };
@@ -90,10 +102,28 @@ class CreateModelView extends DirectiveView {
     return false;
   };
 
-  async _addProperty(el, model) {
-    const li = document.createElement("li");
-    li.id = `prop_${this._props}`;
-    li.innerHTML = `
+  async _addProperties(model) {
+    if (!model || !model.properties) {
+      return "";
+    }
+    const keys = model.properties, l = keys.length;
+    let i = 0;
+    let markup = "";
+    for(i; i < l; i++) {
+      console.log(model.properties[i]);
+      markup += `<li id="prop_${this._props}">`;
+      markup += await this._createPropertyMarkup(model.properties[i]);
+      markup += "</li>\n";
+    }
+    console.log(markup);
+    return markup;
+  };
+
+  async _createPropertyMarkup(model) {
+    if (!model) {
+      throw new Error("What the!!??");
+    }
+    return `
       <input type="checkbox" name="select" value="prop_${this._props}"/>
       <label>Type
         <select name="type_${this._props}" required="required" value="${model.type}">
@@ -119,6 +149,12 @@ class CreateModelView extends DirectiveView {
         Required
       </label>
     `;
+  };
+
+  async _addProperty(el, model) {
+    const li = document.createElement("li");
+    li.id = `prop_${this._props}`;
+    li.innerHTML = this._createPropertyMarkup(model);
     await list.append(li);
     this._props++;
   };
@@ -135,8 +171,6 @@ class CreateModelView extends DirectiveView {
 
   async render() {
     await super.render();
-    //this.syncBoundElement("name");
-    //this.syncBoundElement("desc");
     this.delegateEvents();
     return this;
   };
@@ -146,4 +180,4 @@ class CreateModelView extends DirectiveView {
   };
 };
 
-export default CreateModelView;
+export default EditModelView;

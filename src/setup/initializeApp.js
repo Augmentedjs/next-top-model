@@ -10,9 +10,9 @@ const initializeApp = async () => {
   try {
 
     // TODO: remove this (cooking data)
-    let i = 0;
+    /*let i = 0;
     for (i; i < 10; i++) {
-      await Application.saveModel({
+      await Application.datastore.save({
         "title": `Test${i}`,
         "desc": `Test Model ${i}`,
         "type_0": "string",
@@ -21,9 +21,9 @@ const initializeApp = async () => {
         "name_1": "address",
         "identifier": `test${i}`
       });
-    }
+    }*/
 
-    Application.registerStylesheet(FONT.FONTS);
+    Application.registerStylesheet(FONT.BUTTONS);
 
     Application.mediator = new Mediator();
     if (!Application.mediator) {

@@ -54,7 +54,7 @@ const displayMessage = async (message, title, context) => {
 };
 
 const saveAndShow = async (model) => {
-  await Application.saveModel(model);
+  await Application.datastore.save(model);
   await Application.navigate("home");
   return true;
 };
@@ -66,7 +66,7 @@ class Mediator extends BaseMediator {
     });
 
     this.on(DISPLAY_ERROR_MESSAGE, (message) => {
-      displayErrorMessage(message, this);
+      this.displayErrorMessage(message);
     });
 
     this.on(DISPLAY_MESSAGE, (message, title) => {
@@ -127,6 +127,10 @@ class Mediator extends BaseMediator {
         Logger.error(e);
       });
     });
+  };
+
+  displayErrorMessage(message) {
+    displayErrorMessage(message, this);
   };
 };
 
