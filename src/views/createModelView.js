@@ -10,7 +10,7 @@ const MOUNT_POINT = "#main",
 const parseModel = async (data) => {
   const model = {
     "title": data.title,
-    "description": data.desc,
+    "description": data.description,
     "properties": []
   };
 

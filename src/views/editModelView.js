@@ -17,6 +17,8 @@ class EditModelView extends DirectiveView {
 
     console.debug(model);
 
+    this._props = 0;
+
     if (model) {
       this.template = `
         <h1>Edit Model</h1>
@@ -48,7 +50,6 @@ class EditModelView extends DirectiveView {
         </div>
       `;
     }
-    this._props = 0;
   };
 
   async cancel(e) {
@@ -102,7 +103,7 @@ class EditModelView extends DirectiveView {
     return false;
   };
 
-  async _addProperties(model) {
+  _addProperties(model) {
     if (!model || !model.properties) {
       return "";
     }
@@ -112,24 +113,24 @@ class EditModelView extends DirectiveView {
     for(i; i < l; i++) {
       console.log(model.properties[i]);
       markup += `<li id="prop_${this._props}">`;
-      markup += await this._createPropertyMarkup(model.properties[i]);
+      markup += this._createPropertyMarkup(model.properties[i]);
       markup += "</li>\n";
     }
     console.log(markup);
     return markup;
   };
 
-  async _createPropertyMarkup(model) {
+  _createPropertyMarkup(model) {
     if (!model) {
       throw new Error("What the!!??");
     }
     return `
       <input type="checkbox" name="select" value="prop_${this._props}"/>
       <label>Type
-        <select name="type_${this._props}" required="required" value="${model.type}">
-          <option value="string">String</option>
-          <option value="number">Number</option>
-          <option value="array">Array</option>
+        <select name="type_${this._props}" required="required">
+          <option value="string" ${(model.type === "string") ? "selected=\"selected\"" : ""}>String</option>
+          <option value="number" ${(model.type === "number") ? "selected=\"selected\"" : ""}>Number</option>
+          <option value="array" ${(model.type === "array") ? "selected=\"selected\"" : ""}>Array</option>
         </select>
       </label>
       <label>Name

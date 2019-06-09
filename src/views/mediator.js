@@ -112,7 +112,7 @@ class Mediator extends BaseMediator {
     this.on(REMOVE_MODELS, (models) => {
       const mediator = this;
       return new Promise( (resolve, reject) => {
-        const l = Application.removeModels(models);
+        const l = Application.datastore.remove(models);
         if (l) {
           resolve(l);
         } else {
