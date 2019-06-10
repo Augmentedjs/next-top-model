@@ -10,18 +10,27 @@ const initializeApp = async () => {
   try {
 
     // TODO: remove this (cooking data)
-    /*let i = 0;
+    let i = 0;
     for (i; i < 10; i++) {
       await Application.datastore.save({
         "title": `Test${i}`,
-        "desc": `Test Model ${i}`,
-        "type_0": "string",
-        "name_0": "name",
-        "type_1": "string",
-        "name_1": "address",
-        "identifier": `test${i}`
+        "description": `Test Model ${i}`,
+        "identifier": `test${i}`,
+        "properties": [
+          { "type": "string",
+            "name": "name"
+          },
+          {
+            "type": "string",
+            "name": "address"
+          },
+          {
+            "type": "number",
+            "name": "zip"
+          }
+        ]
       });
-    }*/
+    }
 
     Application.registerStylesheet(FONT.BUTTONS);
 

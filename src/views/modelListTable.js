@@ -17,8 +17,6 @@ const MOUNT_POINT = "#modelListTable";
 
 class ModelListTable extends AutomaticTable {
   constructor(data) {
-
-    // TODO: support message position
     super({
       "el": MOUNT_POINT,
       "name": "modellist",
@@ -51,7 +49,7 @@ class ModelListTable extends AutomaticTable {
           }
         } else if (message === `${TABLE_GET_SELECTED_MODELS}_${EXPORT_SELECTED_MODELS}`) {
           const selected = this.getSelected();
-          Logger.debug(`Table get selected ${selected}`);
+          //Logger.debug(`Table get selected ${selected}`);
           if (selected && selected.length > 0) {
             this.sendMessage(EXPORT_MODELS, this.getSelectedAsJSON());
           } else {
@@ -59,7 +57,7 @@ class ModelListTable extends AutomaticTable {
           }
         } else if (message === TABLE_REFRESH) {
           const models = Application.datastore.models;
-          this.populate(models);
+          this.populate(Object.values(models));
           this.render();
         }
       } catch(e) {
@@ -67,14 +65,6 @@ class ModelListTable extends AutomaticTable {
         this.showMessage(e);
       }
     });
-  };
-
-  render() {
-    return super.render();
-  };
-
-  remove() {
-    return super.remove();
   };
 
   rowLink(row) {
