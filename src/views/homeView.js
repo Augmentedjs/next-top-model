@@ -9,7 +9,7 @@ import Logger from "../logger/logger.js";
 const MOUNT_POINT = "#main",
 build = async (view, models) => {
   try {
-    Logger.debug("Models", models);
+    //Logger.debug("Models", models);
     let list = (models) ? await Object.values(models) : [];
     if (!list) {
       list = [];
@@ -34,7 +34,7 @@ class HomeView extends DirectiveView {
       <div class="toolbar">
         <nav id="control"></nav>
       </div>
-      <div id="modelListTable"></div>
+      <div id="modelListTable" class="container"></div>
       <button data-${this.name}="createmodel" data-click="createmodel" title="Create Model" class="round bottom right">
         <i class="material-icons md-light">add</i>
       </button>

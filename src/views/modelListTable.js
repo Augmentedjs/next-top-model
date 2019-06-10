@@ -8,7 +8,9 @@ import {
   TABLE_GET_SELECTED_MODELS,
   EXPORT_SELECTED_MODELS,
   EXPORT_MODELS,
-  TABLE_REFRESH
+  TABLE_REFRESH,
+  SCHEMAS_ONLY,
+  SCHEMAS_AND_MODELS
 } from "../messages.js";
 import ConfirmDialog from  "../components/confirmDialog.js";
 import Application from "../application/application.js";
@@ -59,6 +61,22 @@ class ModelListTable extends AutomaticTable {
           const models = Application.datastore.models;
           this.populate(Object.values(models));
           this.render();
+        } else if (message === `${TABLE_GET_SELECTED_MODELS}_${EXPORT_SELECTED_MODELS}${SCHEMAS_AND_MODELS}`) {
+          const selected = this.getSelected();
+          //Logger.debug(`Table get selected ${selected}`);
+          if (selected && selected.length > 0) {
+            this.sendMessage(`${EXPORT_MODELS}${SCHEMAS_AND_MODELS}`, this.getSelectedAsJSON());
+          } else {
+            this.showMessage("Please select something to export.");
+          }
+        } else if (message === `${TABLE_GET_SELECTED_MODELS}_${EXPORT_SELECTED_MODELS}${SCHEMAS_ONLY}`) {
+          const selected = this.getSelected();
+          //Logger.debug(`Table get selected ${selected}`);
+          if (selected && selected.length > 0) {
+            this.sendMessage(`${EXPORT_MODELS}${SCHEMAS_ONLY}`, this.getSelectedAsJSON());
+          } else {
+            this.showMessage("Please select something to export.");
+          }
         }
       } catch(e) {
         Logger.error(e);

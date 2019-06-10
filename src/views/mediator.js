@@ -1,4 +1,5 @@
 import { Mediator as BaseMediator } from "presentation-mediator";
+import { Notification } from "presentation-components";
 import ErrorDialog from "../components/errorDialog.js";
 import MessageDialog from "../components/messageDialog.js";
 import ExportConfirmDialog from  "../components/exportConfirmDialog.js";
@@ -22,7 +23,14 @@ import {
   TABLE_GET_SELECTED_MODELS,
   REMOVE_MODELS,
   EXPORT_MODELS,
-  TABLE_REFRESH
+  TABLE_REFRESH,
+  CONFIRM_YES,
+  CONFIRM_NO,
+  DELETE,
+  CONFIRM_EXPORT_SCHEMAS_ONLY,
+  CONFIRM_EXPORT_SCHEMAS_AND_MODELS,
+  SCHEMAS_ONLY,
+  SCHEMAS_AND_MODELS
 } from "../messages.js";
 
 const displayErrorMessage = async (message, context) => {
@@ -104,14 +112,22 @@ class Mediator extends BaseMediator {
     });
 
     this.on(ADD_CREATED_MODEL, (model) => {
+      displayNotification("Model Added!", "Add Model", this);
       saveAndShow(model);
     });
 
     this.on(SAVE_UPDATED_MODEL, (model) => {
+      displayNotification("Model Updated!", "Update Model", this);
       saveAndShow(model);
     });
 
     this.on(REMOVE_SELECTED_MODELS, () => {
+      const dialog = new ConfirmDialog({"message": DELETE, "body": "Do you wish to deleted the selected models?"});
+      dialog.render();
+      this.observeColleagueAndTrigger(dialog, PANEL, dialog.name);
+    });
+
+    this.on(`${CONFIRM_YES}${DELETE}`, (model) => {
       this.publish(PANEL, REMOVE_SELECTED_MODELS, REMOVE_SELECTED_MODELS);
     });
 
@@ -125,10 +141,14 @@ class Mediator extends BaseMediator {
           reject(0);
         }
       })
-      .then( () => {
-        //Application.navigate("home");
-        mediator.publish(PANEL, TABLE_REFRESH, TABLE_REFRESH);
+      .then( (changes) => {
+        if (changes && changes > 0) {
+          mediator.publish(PANEL, TABLE_REFRESH, TABLE_REFRESH);
+        }
         return true;
+      })
+      .then( () => {
+        displayNotification("Deleted Models!", "Delete", this);
       })
       .catch( (e) => {
         Logger.error(e);
@@ -136,13 +156,30 @@ class Mediator extends BaseMediator {
     });
 
     this.on(EXPORT_SELECTED_MODELS, () => {
-      this.publish(PANEL, `${TABLE_GET_SELECTED_MODELS}_${EXPORT_SELECTED_MODELS}`);
-    });
-
-    this.on(EXPORT_MODELS, (models) => {
-      Logger.debug(`Export Models ${JSON.stringify(models)}`);
       const dialog = new ExportConfirmDialog();
       dialog.render();
+      this.observeColleagueAndTrigger(dialog, PANEL, dialog.name);
+      //this.publish(PANEL, `${TABLE_GET_SELECTED_MODELS}_${EXPORT_SELECTED_MODELS}`);
+    });
+
+    this.on(`${EXPORT_MODELS}${SCHEMAS_ONLY}`, (models) => {
+      displayNotification("Exported Models!", "Export", this);
+      Logger.debug(`Export Models ${JSON.stringify(models)}`);
+
+    });
+
+    this.on(`${EXPORT_MODELS}${SCHEMAS_AND_MODELS}`, (models) => {
+      displayNotification("Exported Models!", "Export", this);
+      Logger.debug(`Export Models ${JSON.stringify(models)}`);
+
+    });
+
+    this.on(CONFIRM_EXPORT_SCHEMAS_ONLY, (models) => {
+      this.publish(PANEL, `${TABLE_GET_SELECTED_MODELS}_${EXPORT_SELECTED_MODELS}${SCHEMAS_ONLY}`);
+    });
+
+    this.on(CONFIRM_EXPORT_SCHEMAS_AND_MODELS, (models) => {
+      this.publish(PANEL, `${TABLE_GET_SELECTED_MODELS}_${EXPORT_SELECTED_MODELS}${SCHEMAS_AND_MODELS}`);
     });
   };
 

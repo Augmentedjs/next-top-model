@@ -1,4 +1,5 @@
 import { DialogView } from "presentation-components";
+import { CONFIRM_EXPORT_SCHEMAS_ONLY, CONFIRM_EXPORT_SCHEMAS_AND_MODELS } from "../messages.js";
 
 class ExportConfirmDialog extends DialogView {
   constructor() {
@@ -15,15 +16,13 @@ class ExportConfirmDialog extends DialogView {
     });
   };
 
-  ok(event) {
-    this.close(event);
-  };
-
   schemas(event) {
+    this.sendMessage(CONFIRM_EXPORT_SCHEMAS_ONLY);
     this.close(event);
   };
 
   both(event) {
+    this.sendMessage(CONFIRM_EXPORT_SCHEMAS_AND_MODELS);
     this.close(event);
   };
 };
