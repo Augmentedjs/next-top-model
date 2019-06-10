@@ -1,7 +1,8 @@
 import { DirectiveView } from "presentation-decorator";
 import Dom from "presentation-dom";
-import { ADD_CREATED_MODEL, NAVIGATION } from "../messages.js";
+import { SAVE_UPDATED_MODEL, NAVIGATION } from "../messages.js";
 import Logger from "../logger/logger.js";
+import parseModel from "./functions/parseModel.js";
 
 const MOUNT_POINT = "#main",
       PROPERTY_LIST = "props",
@@ -14,11 +15,7 @@ class EditModelView extends DirectiveView {
       "name": "editmodelview",
       "style": "view"
     });
-
-    console.debug(model);
-
     this._props = 0;
-
     if (model) {
       this.template = `
         <h1>Edit Model</h1>
@@ -62,18 +59,10 @@ class EditModelView extends DirectiveView {
     e.preventDefault();
     const data = {};
     await this._formdata.forEach((value, key) => { data[key] = value });
-    data.identifier = data.title.replace(/[^0-9a-z]/gi, "_").toLowerCase();
-    this.sendMessage(ADD_CREATED_MODEL, data);
+    const model = await parseModel(data);
+    console.debug("data", data, "model", model);
+    this.sendMessage(SAVE_UPDATED_MODEL, model);
     return false;
-  };
-
-  get _formdata() {
-    const form = document.getElementById(MODEL_FORM);
-    let formdata = null;
-    if (form) {
-      formdata = new FormData(form);
-    }
-    return formdata;
   };
 
   async rem(e) {
@@ -103,6 +92,15 @@ class EditModelView extends DirectiveView {
     return false;
   };
 
+  get _formdata() {
+    const form = document.getElementById(MODEL_FORM);
+    let formdata = null;
+    if (form) {
+      formdata = new FormData(form);
+    }
+    return formdata;
+  };
+
   _addProperties(model) {
     if (!model || !model.properties) {
       return "";
@@ -111,12 +109,12 @@ class EditModelView extends DirectiveView {
     let i = 0;
     let markup = "";
     for(i; i < l; i++) {
-      console.log(model.properties[i]);
+      //console.log("property", i, model.properties[i]);
       markup += `<li id="prop_${this._props}">`;
       markup += this._createPropertyMarkup(model.properties[i]);
       markup += "</li>\n";
     }
-    console.log(markup);
+    //console.log(markup);
     return markup;
   };
 
@@ -124,7 +122,7 @@ class EditModelView extends DirectiveView {
     if (!model) {
       throw new Error("What the!!??");
     }
-    return `
+    const markup = `
       <input type="checkbox" name="select" value="prop_${this._props}"/>
       <label>Type
         <select name="type_${this._props}" required="required">
@@ -150,6 +148,8 @@ class EditModelView extends DirectiveView {
         Required
       </label>
     `;
+    this._props++;
+    return markup;
   };
 
   async _addProperty(el, model) {

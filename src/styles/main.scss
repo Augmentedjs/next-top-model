@@ -14,7 +14,8 @@ body {
   --primary-color-light: #9a67ea;
   --secondary-color: #00bcd4;
   --secondary-color-dark: #008ba3;
-  --secondary-color-light: #62efff;
+  --secondary-color-light: #80DEEA;
+  --secondary-color-extra-light: #E0F7FA;
   --background-color: #f5f5f5;
   --app-color: #efefef;
   --light-text: rgba(255, 255, 255, 0.85);
@@ -207,10 +208,25 @@ h3 {
 }
 
 .message {
-  margin: 0 0 0 1rem;
+  margin: 0.5rem 0 0 1rem;
   font-size: 1rem;
   height: 1.5rem;
   line-height: 1.5rem;
+}
+
+table {
+  &.material {
+    td {
+      &:hover {
+        background-color: inherit;
+      }
+    }
+    tr {
+      &:hover {
+        background-color: var(--secondary-color-extra-light);
+      }
+    }
+  }
 }
 
 .props {

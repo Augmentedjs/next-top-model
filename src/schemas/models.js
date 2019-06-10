@@ -11,6 +11,10 @@ const MODELS = {
     "title": {
       "description": "Title",
       "type" : "string"
+    },
+    "description": {
+      "description": "Description",
+      "type" : "string"
     }
   }
 };

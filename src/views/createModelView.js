@@ -1,31 +1,11 @@
 import { DirectiveView } from "presentation-decorator";
 import Dom from "presentation-dom";
 import { ADD_CREATED_MODEL, NAVIGATION } from "../messages.js";
+import parseModel from "./functions/parseModel.js";
 
 const MOUNT_POINT = "#main",
       PROPERTY_LIST = "props",
-      MODEL_FORM = "model_form",
-      DELIMETER = "_";
-
-const parseModel = async (data) => {
-  const model = {
-    "title": data.title,
-    "description": data.description,
-    "properties": []
-  };
-
-  model.identifier = await data.title.replace(/[^0-9a-z]/gi, "_").toLowerCase();
-
-  // add properties
-  await Object.keys(data).forEach( (key) => {
-  	const value = (data[key]);
-    const keyAndIndex = key.split(DELIMETER);
-    const prop = model.properties[keyAndIndex[1]] || {};
-    prop[keyAndIndex[0]] = value;
-    model.properties[keyAndIndex[1]] = prop;
-  });
-  return model;
-};
+      MODEL_FORM = "model_form";
 
 class CreateModelView extends DirectiveView {
   constructor() {

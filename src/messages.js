@@ -10,6 +10,10 @@ export const GENERATE = "generate";
 
 export const CREATE_MODEL = "createmodel";
 export const REMOVE_SELECTED_MODELS = "removeselectedmodels";
+export const EXPORT_SELECTED_MODELS = "exportselectedmodels";
+export const TABLE_GET_SELECTED_MODELS = "tablegetselectedmodels";
 export const ADD_CREATED_MODEL = "addcreatedmodel";
 export const REMOVE_MODELS = "removemodels";
+export const SAVE_UPDATED_MODEL = "saveupdatedmodel";
 export const TABLE_REFRESH = "tablerefresh";
+export const EXPORT_MODELS = "exportmodels"

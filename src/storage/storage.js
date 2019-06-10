@@ -34,7 +34,7 @@ class Storage {
   };
 
   async clear() {
-    await this.datastore.setItem(MODELS, {});
+    await this.datastore.removeItem(MODELS);
     this._cache = null;
     return 0;
   };
@@ -43,7 +43,7 @@ class Storage {
     Logger.debug(`Remove these ${JSON.stringify(rem)}`);
     let models;
     if (!this._cache) {
-      models = this.datastore.getItem(MODELS);
+      models = await this.datastore.getItem(MODELS);
     } else {
       models = this._cache;
     }
@@ -51,11 +51,12 @@ class Storage {
     if (Array.isArray(rem)) {
       let i = 0;
       const l = rem.length;
+      Logger.debug(JSON.stringify(models));
       for (i; i < l; i++) {
-        models[rem[i].identifier] = null;
+        await delete models[rem[i].identifier];
       }
     } else {
-      models[rem.identifier] = null;
+      await delete models[rem.identifier];
     }
     await this.datastore.setItem(MODELS, models);
     this._cache = models;
@@ -83,14 +84,7 @@ class Storage {
   };
 
   setModel(model) {
-    let models;
-    if (!this._cache) {
-      models = this.datastore.getItem(MODELS);
-    } else {
-      models = this._cache;
-    }
-    models[model.identifier] = model;
-    return model;
+    return this.save(model);
   };
 };
 
