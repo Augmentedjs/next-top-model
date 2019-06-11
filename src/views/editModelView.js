@@ -119,32 +119,32 @@ class EditModelView extends DirectiveView {
   };
 
   _createPropertyMarkup(model) {
-    if (!model) {
+    /*if (!model) {
       throw new Error("What the!!??");
-    }
+    }*/
     const markup = `
       <input type="checkbox" name="select" value="prop_${this._props}"/>
       <label>Type
         <select name="type_${this._props}" required="required">
-          <option value="string" ${(model.type === "string") ? "selected=\"selected\"" : ""}>String</option>
-          <option value="number" ${(model.type === "number") ? "selected=\"selected\"" : ""}>Number</option>
-          <option value="array" ${(model.type === "array") ? "selected=\"selected\"" : ""}>Array</option>
+          <option value="string" ${(model && model.type === "string") ? "selected=\"selected\"" : ""}>String</option>
+          <option value="number" ${(model && model.type === "number") ? "selected=\"selected\"" : ""}>Number</option>
+          <option value="array" ${(model && model.type === "array") ? "selected=\"selected\"" : ""}>Array</option>
         </select>
       </label>
       <label>Name
-        <input type="text" name="name_${this._props}" placeholder="Name" required="required" value="${model.name}"/>
+        <input type="text" name="name_${this._props}" placeholder="Name" required="required" value="${(model) ? model.name : ""}"/>
       </label>
       <label>Min
-        <input type="number" name="min_${this._props}" min="0" class="hidden" value="${model.min}"/>
+        <input type="number" name="min_${this._props}" min="0" class="hidden" value="${(model) ? model.min : ""}"/>
       </label>
       <label>Max
-        <input type="number" name="max_${this._props}" min="0" class="hidden" value="${model.max}"/>
+        <input type="number" name="max_${this._props}" min="0" class="hidden" value="${(model) ? model.max : ""}"/>
       </label>
       <label>Regex
-        <input type="type" name="regex_${this._props}" value="${model.regex}"/>
+        <input type="type" name="regex_${this._props}" value="${(model) ? model.regex : ""}"/>
       </label>
       <label>
-        <input type="checkbox" name="required_${this._props}" ${model.required ? "checked=\"checked\"" : ""}/>
+        <input type="checkbox" name="required_${this._props}" ${(model && model.required) ? "checked=\"checked\"" : ""}/>
         Required
       </label>
     `;
@@ -156,7 +156,7 @@ class EditModelView extends DirectiveView {
     const li = document.createElement("li");
     li.id = `prop_${this._props}`;
     li.innerHTML = this._createPropertyMarkup(model);
-    await list.append(li);
+    await el.append(li);
     this._props++;
   };
 
