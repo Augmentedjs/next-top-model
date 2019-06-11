@@ -10,7 +10,7 @@ const initializeApp = async () => {
   try {
 
     // TODO: remove this (cooking data)
-    let i = 0;
+    /*let i = 0;
     for (i; i < 10; i++) {
       await Application.datastore.save({
         "title": `Test${i}`,
@@ -30,7 +30,7 @@ const initializeApp = async () => {
           }
         ]
       });
-    }
+    }*/
 
     Application.registerStylesheet(FONT.BUTTONS);
 
