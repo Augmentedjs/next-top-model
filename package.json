@@ -59,6 +59,7 @@
   "dependencies": {
     "file-saver": "^2.0.2",
     "jszip": "^3.2.1",
+    "typeface-roboto": "0.0.54",
     "material-icons": "^0.3.1",
     "next-core-logger": "^2.5.3",
     "next-core-utilities": "^2.6.1",
@@ -73,7 +74,6 @@
     "presentation-models": "^2.6.3",
     "presentation-navigation": "^2.6.0",
     "presentation-router": "^2.6.6",
-    "presentation-table": "^2.8.1",
-    "typeface-roboto": "0.0.54"
+    "presentation-table": "^2.8.1"
   }
 }

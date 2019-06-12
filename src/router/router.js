@@ -67,7 +67,7 @@ class Router extends BaseRouter {
       Application.mediator.dismissColleagueTrigger(this.view, PANEL, this.view.name);
     }
     return super.cleanup();
-  }
+  };
 };
 
 export default Router;

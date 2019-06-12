@@ -13,7 +13,7 @@ class ErrorDialog extends AlertDialogView {
     options.style = "error alert";
     options.title = "An Error Occurred! 😞"
     super(options);
-  }
+  };
 };
 
 export default ErrorDialog;
