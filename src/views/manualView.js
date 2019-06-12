@@ -1,9 +1,9 @@
 import { DirectiveView } from "presentation-decorator";
+import Application from "../application/application.js";
 import { prettyPrint } from "next-core-utilities";
 import { Model } from "presentation-models";
 import { SchemaGenerator } from "next-core-validation";
 import ControlPanelView from "./controlView.js";
-import Application from "../application/application.js";
 import { PANEL, VALIDATE, RESET, GENERATE } from "../messages.js";
 
 const MOUNT_POINT = "#main",

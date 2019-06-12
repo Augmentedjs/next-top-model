@@ -1,7 +1,6 @@
 import { DirectiveView } from "presentation-decorator";
 import Dom from "presentation-dom";
 import { SAVE_UPDATED_MODEL, NAVIGATION } from "../messages.js";
-import Logger from "../logger/logger.js";
 import parseModel from "./functions/parseModel.js";
 
 const MOUNT_POINT = "#main",
@@ -60,7 +59,7 @@ class EditModelView extends DirectiveView {
     const data = {};
     await this._formdata.forEach((value, key) => { data[key] = value });
     const model = await parseModel(data);
-    console.debug("data", data, "model", model);
+    //console.debug("data", data, "model", model);
     this.sendMessage(SAVE_UPDATED_MODEL, model);
     return false;
   };
@@ -132,16 +131,16 @@ class EditModelView extends DirectiveView {
         </select>
       </label>
       <label>Name
-        <input type="text" name="name_${this._props}" placeholder="Name" required="required" value="${(model) ? model.name : ""}"/>
+        <input type="text" name="name_${this._props}" placeholder="Name" required="required" value="${(model && model.name) ? model.name : ""}"/>
       </label>
       <label>Min
-        <input type="number" name="min_${this._props}" min="0" class="hidden" value="${(model) ? model.min : ""}"/>
+        <input type="number" name="min_${this._props}" min="0" class="hidden" value="${(model && model.min) ? model.min : ""}"/>
       </label>
       <label>Max
-        <input type="number" name="max_${this._props}" min="0" class="hidden" value="${(model) ? model.max : ""}"/>
+        <input type="number" name="max_${this._props}" min="0" class="hidden" value="${(model && model.max) ? model.max : ""}"/>
       </label>
       <label>Regex
-        <input type="type" name="regex_${this._props}" value="${(model) ? model.regex : ""}"/>
+        <input type="type" name="regex_${this._props}" value="${(model && model.regex) ? model.regex : ""}"/>
       </label>
       <label>
         <input type="checkbox" name="required_${this._props}" ${(model && model.required) ? "checked=\"checked\"" : ""}/>

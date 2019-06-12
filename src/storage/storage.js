@@ -1,7 +1,6 @@
 import { LocalForage } from "presentation-forage-models";
 import { STORAGE_KEY } from "../constants.js";
 const MODELS = "top-model-models";
-import Logger from "../logger/logger.js";
 
 class Storage {
   constructor() {
@@ -25,7 +24,6 @@ class Storage {
         models = {};
       }
       models[model.identifier] = model;
-      //Logger.debug("models", models);
       await this.datastore.setItem(MODELS, models);
       this._cache = models;
       return model;
@@ -40,7 +38,6 @@ class Storage {
   };
 
   async remove(rem) {
-    Logger.debug(`Remove these ${JSON.stringify(rem)}`);
     let models;
     if (!this._cache) {
       models = await this.datastore.getItem(MODELS);
@@ -51,7 +48,6 @@ class Storage {
     if (Array.isArray(rem)) {
       let i = 0;
       const l = rem.length;
-      Logger.debug(JSON.stringify(models));
       for (i; i < l; i++) {
         await delete models[rem[i].identifier];
       }

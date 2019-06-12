@@ -1,6 +1,6 @@
 import { DirectiveView } from "presentation-decorator";
-import { CREATE_MODEL } from "../messages.js";
 import Application from "../application/application.js";
+import { CREATE_MODEL } from "../messages.js";
 import ModelListTable from "./modelListTable.js";
 import ControlPanel from "./controlPanel.js";
 import { PANEL } from "../messages.js";

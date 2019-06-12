@@ -3,7 +3,6 @@ const webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-//const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   entry: ["./src/index.js"],
@@ -78,8 +77,6 @@ module.exports = {
     new webpack.DefinePlugin({
       VERSION: JSON.stringify(require("./package.json").version)
     })
-    /*,
-    new BundleAnalyzerPlugin()*/
   ],
   // optimization
   optimization: {

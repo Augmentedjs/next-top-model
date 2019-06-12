@@ -27,9 +27,6 @@
   "homepage": "https://github.com/Augmentedjs/next-top-model#readme",
   "devDependencies": {
     "@babel/core": "^7.4.5",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
-    "@babel/plugin-transform-async-to-generator": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/register": "^7.4.4",
@@ -55,7 +52,6 @@
     "style-loader": "^0.23.1",
     "url-loader": "^2.0.0",
     "webpack": "^4.33.0",
-    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.3",
     "whatwg-fetch": "^3.0.0",
     "winston": "^3.2.1"

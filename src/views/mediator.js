@@ -3,7 +3,7 @@ import { Mediator as BaseMediator } from "presentation-mediator";
 import Application from "../application/application.js";
 
 import ExportConfirmDialog from  "../components/exportConfirmDialog.js";
-import ConfirmDialog from  "../components/confirmDialog.js";
+import ConfirmDeleteDialog from  "../components/confirmDeleteDialog.js";
 import Logger from "../logger/logger.js";
 import * as MESSAGES from "../messages.js";
 import { displayErrorMessage, displayNotification, displayMessage } from "./functions/mediation.js";
@@ -67,7 +67,7 @@ class Mediator extends BaseMediator {
     });
 
     this.on(MESSAGES.REMOVE_SELECTED_MODELS, () => {
-      const dialog = new ConfirmDialog({"message": MESSAGES.DELETE, "body": "Do you wish to deleted the selected models?"});
+      const dialog = new ConfirmDeleteDialog();
       dialog.render();
       this.observeColleagueAndTrigger(dialog, MESSAGES.PANEL, dialog.name);
     });
@@ -129,6 +129,7 @@ class Mediator extends BaseMediator {
         return Application.saveExport(json);
       })
       .catch( (e) => {
+        Logger.error(e);
         displayNotification(e, "Export", this);
       });
     });
@@ -147,6 +148,7 @@ class Mediator extends BaseMediator {
         return Application.saveExport(json);
       })
       .catch( (e) => {
+        Logger.error(e);
         displayNotification(e, "Export", this);
       });
       //Logger.debug(`Export Models ${JSON.stringify(models)}`);

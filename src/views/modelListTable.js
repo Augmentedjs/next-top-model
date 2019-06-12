@@ -12,7 +12,6 @@ import {
   SCHEMAS_ONLY,
   SCHEMAS_AND_MODELS
 } from "../messages.js";
-import ConfirmDialog from  "../components/confirmDialog.js";
 import Application from "../application/application.js";
 
 const MOUNT_POINT = "#modelListTable";

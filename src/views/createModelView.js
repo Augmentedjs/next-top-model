@@ -49,7 +49,7 @@ class CreateModelView extends DirectiveView {
     const data = {};
     await this._formdata.forEach((value, key) => { data[key] = value });
     const model = await parseModel(data);
-    console.debug("data", data, "model", model);
+    //console.debug("data", data, "model", model);
     this.sendMessage(ADD_CREATED_MODEL, model);
     return false;
   };
