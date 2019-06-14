@@ -25,7 +25,7 @@ class ModelListTable extends AutomaticTable {
       "schema": MODELS,
       "data": data,
       "selectable": true,
-      "sortable": false,
+      "sortable": true,
       "display": ["identifier", "title", "description"],
       "style": "material models",
       "linkable": true,
