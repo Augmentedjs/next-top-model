@@ -112,6 +112,7 @@ class EditModelView extends DirectiveView {
       markup += `<li id="prop_${this._props}">`;
       markup += this._createPropertyMarkup(model.properties[i]);
       markup += "</li>\n";
+      this._props++;
     }
     //console.log(markup);
     return markup;
@@ -147,14 +148,13 @@ class EditModelView extends DirectiveView {
         Required
       </label>
     `;
-    this._props++;
     return markup;
   };
 
   async _addProperty(el, model) {
     const li = document.createElement("li");
     li.id = `prop_${this._props}`;
-    li.innerHTML = this._createPropertyMarkup(model);
+    li.innerHTML = await this._createPropertyMarkup(model);
     await el.append(li);
     this._props++;
   };
