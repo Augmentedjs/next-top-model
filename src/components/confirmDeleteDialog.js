@@ -20,13 +20,11 @@ class ConfirmDeleteDialog extends ConfirmationDialogView {
 
   yes(event) {
     this.sendMessage(`${CONFIRM_YES}${this.message}`);
-    //console.debug("sent yes", `${CONFIRM_YES}${this.message}`);
     this.close(event);
   };
 
   no(event) {
     this.sendMessage(`${CONFIRM_NO}${this.message}`);
-    //console.debug("sent no", `${CONFIRM_NO}${this.message}`);
     this.close(event);
   };
 };
