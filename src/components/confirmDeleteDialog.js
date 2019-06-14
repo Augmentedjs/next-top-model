@@ -2,7 +2,10 @@ import { ConfirmationDialogView } from "presentation-components";
 import { CONFIRM_YES, CONFIRM_NO, DELETE } from "../messages.js";
 
 class ConfirmDeleteDialog extends ConfirmationDialogView {
-  constructor() {
+  constructor(options) {
+    if (!options) {
+      options = {};
+    };
     options.message = DELETE;
     options.body = "Do you wish to deleted the selected models?";
     options.el = "#dialogs";
