@@ -307,15 +307,19 @@ table {
     right: 0;
   }
 
+  &:hover {
+    z-index: 2;
+    ul {
+      transition: z-index 0.5s step-start, opacity 1s ease;
+    }
+  }
+
   ul {
     text-align: left;
     right: 0.25rem;
     left: auto;
     padding-left: 0;
-
-    &:hover {
-      z-index: 2;
-    }
+    transition: z-index 0.5s step-end, opacity 1s ease;
 
     li {
       font-size: 0.8rem;
