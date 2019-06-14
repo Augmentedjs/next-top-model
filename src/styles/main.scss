@@ -241,7 +241,9 @@ table {
 
 .props {
   list-style: none;
+  padding-left: 1rem;
   li {
+    height: 3.5rem;
     label, input[type=checkbox] {
       display: inline-block;
     }
@@ -251,6 +253,13 @@ table {
     label {
       vertical-align: top;
       margin: 0 1rem 0 0;
+
+      &.required {
+        vertical-align: bottom;
+        input[type=checkbox] {
+          margin: 0 0.25rem 0 0;
+        }
+      }
     }
   }
 }
