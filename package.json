@@ -59,14 +59,13 @@
   "dependencies": {
     "file-saver": "^2.0.2",
     "jszip": "^3.2.1",
-    "typeface-roboto": "0.0.54",
     "material-icons": "^0.3.1",
     "next-core-logger": "^2.5.3",
     "next-core-utilities": "^2.6.1",
     "next-core-validation": "^2.5.4",
     "presentation-application": "^2.8.1",
     "presentation-components": "^2.8.3",
-    "presentation-css": "^3.1.8",
+    "presentation-css": "^3.1.9",
     "presentation-decorator": "^2.6.3",
     "presentation-dom": "^2.8.2",
     "presentation-forage-models": "^2.3.1",
@@ -74,6 +73,7 @@
     "presentation-models": "^2.6.3",
     "presentation-navigation": "^2.6.0",
     "presentation-router": "^2.6.6",
-    "presentation-table": "^2.8.1"
+    "presentation-table": "^2.8.1",
+    "typeface-roboto": "0.0.54"
   }
 }

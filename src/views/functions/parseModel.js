@@ -1,10 +1,20 @@
 const DELIMETER = "_";
 
+const toTitleCase = async (phrase) => {
+  return await phrase
+    .replace(/[^a-z0-9]+/gi, "")
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 const parseModel = async (data) => {
   //console.debug("passed form", data);
   const model = {
     "title": data.title,
-    "description": data.description
+    "description": data.description,
+    "className": await toTitleCase(data.title)
   },
   propMap = {};
 
@@ -14,7 +24,13 @@ const parseModel = async (data) => {
     if (key === "title" || key === "description") {
       return;
     }
-  	const value = (data[key]);
+    let value;
+    if (key === "name") {
+      value = (data[key]).replace(/[^a-z0-9 ]+/gi, "_").toLowerCase();
+    } else {
+      value = (data[key]);
+    }
+
     const keyAndIndex = key.split(DELIMETER);
     const prop = propMap[keyAndIndex[1]] || {};
     //console.debug("prop in form", prop);
