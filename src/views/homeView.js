@@ -5,6 +5,7 @@ import ModelListTable from "./modelListTable.js";
 import ControlPanel from "./controlPanel.js";
 import { PANEL } from "../messages.js";
 import Logger from "../logger/logger.js";
+import { sortObjects } from "next-core-sort";
 
 const MOUNT_POINT = "#main",
 build = async (view, models) => {
@@ -13,6 +14,10 @@ build = async (view, models) => {
     let list = (models) ? await Object.values(models) : [];
     if (!list) {
       list = [];
+    }
+    // sort list by identifier
+    if (list.length > 1) {
+      list = sortObjects(list, "identifier");
     }
     view.table = new ModelListTable(list);
     view.controls = new ControlPanel();
