@@ -3,14 +3,14 @@ const generateModel = (model) => {
     import { Model } from "presentation-models";
     import SCHEMA from "./${model.identifier}_schema.js";
 
-    class ${model.title} extends Model {
+    class ${model.className} extends Model {
       constructor(data, options) {
         options.schema = SCHEMA;
         super(data, options);
       };
     };
 
-    export default ${model.title};
+    export default ${model.className};
   `;
   return modelClass;
 };
