@@ -143,7 +143,7 @@ class EditModelView extends DirectiveView {
       <label>Regex
         <input type="type" name="regex_${this._props}" value="${(model && model.regex) ? model.regex : ""}"/>
       </label>
-      <label>
+      <label class="required">
         <input type="checkbox" name="required_${this._props}" ${(model && model.required) ? "checked=\"checked\"" : ""}/>
         Required
       </label>

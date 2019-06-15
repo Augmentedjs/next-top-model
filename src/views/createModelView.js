@@ -109,7 +109,7 @@ class CreateModelView extends DirectiveView {
         <label>Regex
           <input type="type" name="regex_${this._props}" class="hidden"/>
         </label>
-        <label>
+        <label class="required">
           <input type="checkbox" name="required_${this._props}"/>
           Required
         </label>
