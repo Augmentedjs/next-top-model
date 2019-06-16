@@ -85,7 +85,7 @@ class ModelListTable extends AutomaticTable {
   };
 
   rowLink(row) {
-		return `/#models/${row["identifier"]}`;
+		return `#models/${row["identifier"]}`;
   };
 };
 
