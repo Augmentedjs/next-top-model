@@ -84,6 +84,9 @@ dialog {
     margin-left: -12.25rem;
     height: 15rem;
   }
+  &.alert {
+    height: 9rem;
+  }
   button {
     color: var(--primary-color);
     &:hover, &:active {
