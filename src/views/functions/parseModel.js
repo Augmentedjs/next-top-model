@@ -28,9 +28,9 @@ const parseModel = async (data) => {
     const value = (data[key]);
     const keyAndIndex = await key.split(DELIMETER);
     const prop = propMap[keyAndIndex[1]] || {};
-    
+
     if (keyAndIndex[0] === "name") {
-      prop[keyAndIndex[0]] = (value).replace(WORD_REPLACE_REGEX, "_").toLowerCase();
+      prop[keyAndIndex[0]] = await (value).replace(WORD_REPLACE_REGEX, "_").toLowerCase();
     } else {
       prop[keyAndIndex[0]] = value;
     }

@@ -67,7 +67,7 @@ class EditModelView extends DirectiveView {
   async rem(e) {
     e.preventDefault();
     if (this._formdata) {
-      const selected = this._formdata.getAll("select");
+      const selected = await this._formdata.getAll("select");
       if (selected) {
         const l = selected.length;
         let i = 0;
