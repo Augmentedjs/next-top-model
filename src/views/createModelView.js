@@ -1,6 +1,6 @@
 import { DirectiveView } from "presentation-decorator";
 import Dom from "presentation-dom";
-import { ADD_CREATED_MODEL, NAVIGATION } from "../messages.js";
+import { ADD_CREATED_MODEL, NAVIGATION, DISPLAY_ERROR_MESSAGE } from "../messages.js";
 import parseModel from "./functions/parseModel.js";
 
 const MOUNT_POINT = "#main",
@@ -47,10 +47,16 @@ class CreateModelView extends DirectiveView {
   async create(e) {
     e.preventDefault();
     const data = {};
-    await this._formdata.forEach((value, key) => { data[key] = value });
-    const model = await parseModel(data);
-    //console.debug("data", data, "model", model);
-    this.sendMessage(ADD_CREATED_MODEL, model);
+    const form = await this._formdata;
+    if (form) {
+      await form.forEach((value, key) => { data[key] = value });
+      const model = await parseModel(data);
+      //console.debug("data", data, "model", model);
+      this.sendMessage(ADD_CREATED_MODEL, model);
+    } else {
+      this.sendMessage(DISPLAY_ERROR_MESSAGE,
+        "These is a problem with the form, please correct before creating.");
+    }
     return false;
   };
 
@@ -58,7 +64,10 @@ class CreateModelView extends DirectiveView {
     const form = document.getElementById(MODEL_FORM);
     let formdata = null;
     if (form) {
-      formdata = new FormData(form);
+      const isValidForm = form.checkValidity();
+      if (isValidForm) {
+        formdata = new FormData(form);
+      }
     }
     return formdata;
   };

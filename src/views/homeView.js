@@ -12,12 +12,9 @@ build = async (view, models) => {
   try {
     //Logger.debug("Models", models);
     let list = (models) ? await Object.values(models) : [];
-    if (!list) {
-      list = [];
-    }
     // sort list by identifier
     if (list.length > 1) {
-      list = sortObjects(list, "identifier");
+      list = await sortObjects(list, "identifier");
     }
     view.table = new ModelListTable(list);
     view.controls = new ControlPanel();

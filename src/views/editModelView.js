@@ -1,6 +1,6 @@
 import { DirectiveView } from "presentation-decorator";
 import Dom from "presentation-dom";
-import { SAVE_UPDATED_MODEL, NAVIGATION } from "../messages.js";
+import { SAVE_UPDATED_MODEL, NAVIGATION, DISPLAY_ERROR_MESSAGE } from "../messages.js";
 import parseModel from "./functions/parseModel.js";
 
 const MOUNT_POINT = "#main",
@@ -57,17 +57,23 @@ class EditModelView extends DirectiveView {
   async save(e) {
     e.preventDefault();
     const data = {};
-    await this._formdata.forEach((value, key) => { data[key] = value });
-    const model = await parseModel(data);
-    //console.debug("data", data, "model", model);
-    this.sendMessage(SAVE_UPDATED_MODEL, model);
+    const form = await this._formdata;
+    if (form) {
+      await form.forEach((value, key) => { data[key] = value });
+      const model = await parseModel(data);
+      //console.debug("data", data, "model", model);
+      this.sendMessage(SAVE_UPDATED_MODEL, model);
+    } else {
+      this.sendMessage(DISPLAY_ERROR_MESSAGE,
+        "These is a problem with the form, please correct before creating.");
+    }
     return false;
   };
 
   async rem(e) {
     e.preventDefault();
     if (this._formdata) {
-      const selected = this._formdata.getAll("select");
+      const selected = await this._formdata.getAll("select");
       if (selected) {
         const l = selected.length;
         let i = 0;
@@ -95,7 +101,10 @@ class EditModelView extends DirectiveView {
     const form = document.getElementById(MODEL_FORM);
     let formdata = null;
     if (form) {
-      formdata = new FormData(form);
+      const isValidForm = form.checkValidity();
+      if (isValidForm) {
+        formdata = new FormData(form);
+      }
     }
     return formdata;
   };
